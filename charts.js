@@ -968,19 +968,27 @@ function initPage3() {
 }
 
 function renderComparisonTable(selectedCategories = null) {
-    // Tất cả items có thể
+    // Dữ liệu mẫu với đầy đủ các cột mới
+    // kh = Kế hoạch duyệt, lkKH = Lũy kế KH, yc = Yêu cầu lần này, lkDuyet = Lũy kế đã duyệt trước
     const allItems = [
-        { name: 'CHI.01 - Pháp lý', code: 'CHI.01', before: 1.4, after: 1.55 },
-        { name: 'CHI.02 - Kiến thiết', code: 'CHI.02', before: 14.2, after: 15.0 },
-        { name: 'CHI.01.10 - Hồ sơ pháp lý', code: 'CHI.01.10', before: 0.8, after: 0.9 },
-        { name: 'CHI.01.20 - Phí giấy phép', code: 'CHI.01.20', before: 0.6, after: 0.65 },
-        { name: 'CHI.06 - Nhân công', code: 'CHI.06', before: 26.5, after: 28.1 },
-        { name: 'CHI.06.30 - Gói thầu KC', code: 'CHI.06.30', before: 8.2, after: 9.6 },
-        { name: 'CHI.06.30.31 - Gói thầu KC A', code: 'CHI.06.30.31', before: null, after: 2.4 },
-        { name: 'CHI.06.40.06 - Gói thầu A', code: 'CHI.06.40.06', before: null, after: 2.4 }
+        { name: 'CHI.01 - Pháp lý dự án',     code: 'CHI.01',       level: 1, kh: 2.0,  lkKH: 2.0,  yc: 1.55, lkDuyet: 1.40 },
+        { name: 'CHI.01.10 - Hồ sơ pháp lý',  code: 'CHI.01.10',    level: 2, kh: 1.0,  lkKH: 1.0,  yc: 0.90, lkDuyet: 0.80 },
+        { name: 'CHI.01.20 - Phí giấy phép',    code: 'CHI.01.20',    level: 2, kh: 1.0,  lkKH: 1.0,  yc: 0.65, lkDuyet: 0.60 },
+        { name: 'CHI.02 - Kiến thiết cơ bản',  code: 'CHI.02',       level: 1, kh: 16.0, lkKH: 16.0, yc: 15.0, lkDuyet: 14.2 },
+        { name: 'CHI.02.10 - Khảo sát địa hình', code: 'CHI.02.10',   level: 2, kh: 4.0,  lkKH: 4.0,  yc: 3.5,  lkDuyet: 3.2  },
+        { name: 'CHI.02.20 - Thiết kế cơ sở',  code: 'CHI.02.20',    level: 2, kh: 6.0,  lkKH: 5.5,  yc: 5.8,  lkDuyet: 5.2  },
+        { name: 'CHI.03 - Bán hàng',             code: 'CHI.03',       level: 1, kh: 5.0,  lkKH: 4.5,  yc: 4.2,  lkDuyet: 3.8  },
+        { name: 'CHI.04 - Chuẩn bị dự án',      code: 'CHI.04',       level: 1, kh: 3.0,  lkKH: 2.8,  yc: 2.5,  lkDuyet: 2.2  },
+        { name: 'CHI.05 - Thiết bị',             code: 'CHI.05',       level: 1, kh: 8.0,  lkKH: 7.0,  yc: 7.2,  lkDuyet: 6.5  },
+        { name: 'CHI.06 - Nhân công & Thầu phụ', code: 'CHI.06',       level: 1, kh: 30.0, lkKH: 27.0, yc: 28.1, lkDuyet: 26.5 },
+        { name: 'CHI.06.30 - Gói thầu kết cấu',  code: 'CHI.06.30',    level: 2, kh: 12.0, lkKH: 10.5, yc: 9.6,  lkDuyet: 8.2  },
+        { name: 'CHI.06.30.31 - KC A',           code: 'CHI.06.30.31', level: 3, kh: 4.0,  lkKH: 0.0,  yc: 2.4,  lkDuyet: 0.0  },
+        { name: 'CHI.06.30.32 - KC B',           code: 'CHI.06.30.32', level: 3, kh: 4.0,  lkKH: 0.0,  yc: 2.1,  lkDuyet: 0.0  },
+        { name: 'CHI.06.40.06 - Gói A',          code: 'CHI.06.40.06', level: 3, kh: 3.0,  lkKH: 0.0,  yc: 2.4,  lkDuyet: 0.0  },
+        { name: 'CHI.07 - Vật tư & NCC',         code: 'CHI.07',       level: 1, kh: 12.0, lkKH: 10.0, yc: 9.8,  lkDuyet: 8.5  },
+        { name: 'CHI.08 - Hoạt động trực tiếp', code: 'CHI.08',       level: 1, kh: 6.0,  lkKH: 5.0,  yc: 4.8,  lkDuyet: 4.2  },
     ];
 
-    // Filter theo selected categories
     const items = selectedCategories && selectedCategories.length > 0
         ? allItems.filter(item => selectedCategories.some(cat => item.code.startsWith(cat)))
         : allItems;
@@ -990,13 +998,76 @@ function renderComparisonTable(selectedCategories = null) {
         return;
     }
 
-    let html = '<table class="data-table"><thead><tr><th>Hạng mục</th><th>Ngân sách</th><th>Yêu cầu chi</th><th>Chênh lệch</th></tr></thead><tbody>';
-    items.forEach(i => {
-        const diff = i.before ? i.after - i.before : i.after;
-        const diffColor = i.before ? (diff > 0 ? '#F59E0B' : '#16A34A') : '#16A34A';
-        const beforeText = i.before ? i.before.toFixed(1) + ' tỷ' : '<span style="color:#888">- (Mới)</span>';
-        html += `<tr><td>${i.name}</td><td>${beforeText}</td><td>${i.after.toFixed(1)} tỷ</td><td style="color:${diffColor}">+${diff.toFixed(1)} tỷ</td></tr>`;
+    // Header
+    let html = `<table class="data-table" style="font-size:12px;min-width:900px;">
+    <thead>
+        <tr>
+            <th rowspan="2" style="min-width:200px;position:sticky;left:0;background:#F1F5F9;z-index:3;">Hạng Mục</th>
+            <th colspan="2" style="text-align:center;background:#EFF6FF;color:#2563EB;">Kế Hoạch</th>
+            <th colspan="2" style="text-align:center;background:#F0FDF4;color:#16A34A;">Thực Hiện</th>
+            <th colspan="2" style="text-align:center;background:#FFFBEB;color:#D97706;">Chênh Lệch</th>
+        </tr>
+        <tr>
+            <th style="text-align:right;background:#EFF6FF;color:#2563EB;">KH Duyệt</th>
+            <th style="text-align:right;background:#EFF6FF;color:#2563EB;">Lũy kế KH</th>
+            <th style="text-align:right;background:#F0FDF4;color:#16A34A;">Yêu cầu duyệt</th>
+            <th style="text-align:right;background:#F0FDF4;color:#16A34A;">Lũy kế đã duyệt</th>
+            <th style="text-align:right;background:#FFFBEB;color:#D97706;">YC vs KH</th>
+            <th style="text-align:right;background:#FFFBEB;color:#D97706;">LK duyệt vs LK KH</th>
+        </tr>
+    </thead>
+    <tbody>`;
+
+    let totKH = 0, totLKKH = 0, totYC = 0, totLKD = 0;
+
+    items.forEach((item, idx) => {
+        const indent = (item.level - 1) * 14;
+        const isBold = item.level === 1;
+        const bg = idx % 2 === 0 ? '' : 'background:#FBFCFE;';
+        const boldStyle = isBold ? 'font-weight:700;' : 'font-weight:400;';
+
+        // Chênh lệch YC so KH (âm = tiết kiệm, dương = vượt)
+        const diffYCKH = +(item.yc - item.kh).toFixed(2);
+        const diffLKKH = item.lkKH > 0 ? +(item.lkDuyet - item.lkKH).toFixed(2) : null;
+
+        const fmtDiff = (v) => {
+            if (v === null) return '<span style="color:#94A3B8;">—</span>';
+            const color = v > 0.05 ? '#DC2626' : v < -0.05 ? '#16A34A' : '#64748B';
+            const sign = v > 0 ? '+' : '';
+            return `<span style="color:${color};font-weight:600;">${sign}${v.toFixed(1)} tỷ</span>`;
+        };
+
+        if (item.level === 1) { totKH += item.kh; totLKKH += item.lkKH; totYC += item.yc; totLKD += item.lkDuyet; }
+
+        html += `<tr style="${bg}">
+            <td style="padding-left:${8 + indent}px;${boldStyle}${bg}position:sticky;left:0;">${item.name}</td>
+            <td style="text-align:right;color:#2563EB;">${item.kh.toFixed(1)} tỷ</td>
+            <td style="text-align:right;color:#2563EB;">${item.lkKH > 0 ? item.lkKH.toFixed(1) + ' tỷ' : '<span style="color:#CBD5E1">—</span>'}</td>
+            <td style="text-align:right;color:#16A34A;font-weight:600;">${item.yc.toFixed(1)} tỷ</td>
+            <td style="text-align:right;color:#16A34A;">${item.lkDuyet > 0 ? item.lkDuyet.toFixed(1) + ' tỷ' : '<span style="color:#CBD5E1">—</span>'}</td>
+            <td style="text-align:right;">${fmtDiff(diffYCKH)}</td>
+            <td style="text-align:right;">${fmtDiff(diffLKKH)}</td>
+        </tr>`;
     });
+
+    // Tổng
+    const totDiff1 = +(totYC - totKH).toFixed(2);
+    const totDiff2 = totLKKH > 0 ? +(totLKD - totLKKH).toFixed(2) : null;
+    const fmtTot = (v) => {
+        if (v === null) return '<span style="color:#94A3B8;">—</span>';
+        const color = v > 0 ? '#DC2626' : '#16A34A';
+        return `<span style="color:${color};">${v > 0 ? '+' : ''}${v.toFixed(1)} tỷ</span>`;
+    };
+    html += `<tr style="background:linear-gradient(135deg,#F1F5F9,#E2E8F0);font-weight:700;">
+        <td style="position:sticky;left:0;background:#E2E8F0;font-weight:700;">TỔNG</td>
+        <td style="text-align:right;color:#2563EB;">${totKH.toFixed(1)} tỷ</td>
+        <td style="text-align:right;color:#2563EB;">${totLKKH.toFixed(1)} tỷ</td>
+        <td style="text-align:right;color:#16A34A;">${totYC.toFixed(1)} tỷ</td>
+        <td style="text-align:right;color:#16A34A;">${totLKD.toFixed(1)} tỷ</td>
+        <td style="text-align:right;">${fmtTot(totDiff1)}</td>
+        <td style="text-align:right;">${fmtTot(totDiff2)}</td>
+    </tr>`;
+
     document.getElementById('comparisonTable').innerHTML = html + '</tbody></table>';
 }
 
@@ -1102,7 +1173,7 @@ function renderPaymentMatrix(selectedCategories = null) {
         'overdue': '<span style="color:#DC2626;font-weight:600;">⚠ Quá hạn</span>'
     };
 
-    let html = '<table class="data-table"><thead><tr><th>Hạng mục</th><th>Thời hạn TT</th><th>Trạng thái</th><th>Giá trị</th></tr></thead><tbody>';
+    let html = '<table class="data-table"><thead><tr><th>Hạng mục</th><th>Thời hạn TT</th><th>Trạng thái</th><th style="text-align:right;">Giá trị cần duyệt</th></tr></thead><tbody>';
     items.forEach(i => {
         const indent = (i.level - 1) * 12;
         const nameStyle = i.level === 1 ? 'font-weight:600;' : '';
