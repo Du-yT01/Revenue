@@ -919,11 +919,26 @@
                     <h1 class="page-title">Duyệt Chi Dự Án</h1>
                     <p class="page-subtitle">Phục vụ phê duyệt chi và mô phỏng tác động tài chính</p>
                 </div>
-                <select class="filter-select" id="projectFilter3" onchange="updatePage3()"
-                    style="min-width:180px;padding:12px 16px;font-size:14px;">
-                    <option value="P001">DA Alpha</option>
-                    <option value="P002">DA Beta</option>
-                </select>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                    <div style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:8px 14px;">
+                        <span style="font-size:12px;color:#64748B;font-weight:600;white-space:nowrap;">Từ ngày</span>
+                        <input type="date" id="filterDateFrom" value="2024-01-01"
+                            onchange="updatePage3()"
+                            style="border:none;background:transparent;font-size:13px;color:#0F172A;font-weight:500;outline:none;cursor:pointer;">
+                    </div>
+                    <span style="color:#94A3B8;font-size:14px;">&#8594;</span>
+                    <div style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:8px 14px;">
+                        <span style="font-size:12px;color:#64748B;font-weight:600;white-space:nowrap;">Đến ngày</span>
+                        <input type="date" id="filterDateTo" value="2024-03-31"
+                            onchange="updatePage3()"
+                            style="border:none;background:transparent;font-size:13px;color:#0F172A;font-weight:500;outline:none;cursor:pointer;">
+                    </div>
+                    <select class="filter-select" id="projectFilter3" onchange="updatePage3()"
+                        style="min-width:160px;padding:10px 14px;font-size:13px;">
+                        <option value="P001">DA Alpha</option>
+                        <option value="P002">DA Beta</option>
+                    </select>
+                </div>
             </div>
 
             <!-- ROW 1: Filter Panel + KPI Cards + Table -->
@@ -1048,15 +1063,15 @@
                 </div>
             </div>
 
-            <!-- ROW 2: Comparison Table + Payment Matrix -->
-            <div class="row">
-                <div class="chart-card col-60">
-                    <div class="chart-title">So Sánh Trước / Sau Duyệt</div>
-                    <div class="table-container" style="max-height:280px;" id="comparisonTable"></div>
+            <!-- ROW 2: B\u1ea3ng So S\u00e1nh (65%) + Chi Ti\u1ebft TT (35%) c\u1ea1nh nhau -->
+            <div class="row" style="align-items:stretch;">
+                <div class="chart-card" style="flex:0 0 calc(65% - 10px);min-width:0;">
+                    <div class="chart-title">So Sánh Kế Hoạch Duyệt / Lũy Kế Duyệt / Yêu Cầu Hiện Tại</div>
+                    <div class="table-container" style="max-height:300px;overflow:auto;" id="comparisonTable"></div>
                 </div>
-                <div class="chart-card col-40">
-                    <div class="chart-title">Chi Tiết Thanh Toán Hạng Mục</div>
-                    <div class="table-container" style="max-height:280px;" id="paymentMatrixTable"></div>
+                <div class="chart-card" style="flex:0 0 calc(35% - 10px);min-width:0;">
+                    <div class="chart-title">Chi Tiết Yêu Cầu Thanh Toán</div>
+                    <div class="table-container" style="max-height:300px;overflow:auto;" id="paymentMatrixTable"></div>
                 </div>
             </div>
         </section>
