@@ -105,859 +105,625 @@ document.addEventListener('click', e => {
     if (!e.target.closest('.multi-select')) document.querySelectorAll('.multi-select').forEach(m => m.classList.remove('open'));
 });
 
-// Page 4 Charts (Quản Lý Ngân Sách)
-// Budget management data
-const budgetMgmtData = {
-    projects: [
-        {
-            id: 'L59', name: 'L59',
-            items: [
-                { code: 'THU01', nganSach: 85.0, hd: 82.5, sl: [6.5, 7.2, 7.8, 8.0, 8.5, 9.0, 8.8, 8.2, 7.5, 6.8, 0, 0], bill: [6.0, 6.8, 7.5, 7.8, 8.2, 8.5, 8.5, 7.8, 7.0, 6.5, 0, 0], nhanTT: [5.5, 6.2, 7.0, 7.2, 7.8, 8.0, 8.0, 7.2, 6.5, 0, 0, 0], congNo: 5.8, overdueDays: 0 },
-                { code: 'THU02', nganSach: 22.5, hd: 20.0, sl: [1.8, 1.9, 2.0, 2.1, 2.0, 1.9, 1.8, 1.7, 1.6, 1.5, 0, 0], bill: [1.5, 1.7, 1.8, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 0, 0], nhanTT: [1.2, 1.5, 1.6, 1.7, 1.6, 1.5, 1.4, 1.3, 0, 0, 0, 0], congNo: 2.4, overdueDays: 12 },
-                { code: 'THU03', nganSach: 8.0, hd: 7.5, sl: [0.5, 0.6, 0.7, 0.7, 0.8, 0.8, 0.7, 0.6, 0.5, 0.5, 0, 0], bill: [0.4, 0.5, 0.6, 0.6, 0.7, 0.7, 0.6, 0.5, 0.4, 0.4, 0, 0], nhanTT: [0.3, 0.4, 0.5, 0.5, 0.6, 0.6, 0.5, 0.4, 0, 0, 0, 0], congNo: 0.8, overdueDays: 0 },
-                { code: 'CHI01', nganSach: 2.5, hd: 2.3, sl: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI02', nganSach: 18.5, hd: 17.8, sl: [1.5, 1.6, 1.7, 1.8, 1.8, 1.9, 1.8, 1.7, 1.6, 1.5, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI03', nganSach: 12.0, hd: 11.5, sl: [1.0, 1.1, 1.1, 1.2, 1.2, 1.2, 1.1, 1.0, 0.9, 0.8, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI04', nganSach: 8.2, hd: 7.8, sl: [0.6, 0.7, 0.7, 0.8, 0.8, 0.8, 0.7, 0.6, 0.5, 0.5, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI05', nganSach: 15.0, hd: 14.2, sl: [1.2, 1.3, 1.4, 1.4, 1.5, 1.5, 1.4, 1.3, 1.2, 1.1, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI06', nganSach: 32.0, hd: 30.5, sl: [2.5, 2.8, 3.0, 3.2, 3.4, 3.5, 3.3, 3.0, 2.8, 2.5, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI07', nganSach: 20.0, hd: 19.0, sl: [1.6, 1.7, 1.8, 1.9, 2.0, 2.0, 1.9, 1.8, 1.7, 1.5, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI08', nganSach: 10.5, hd: 10.0, sl: [0.8, 0.9, 0.9, 1.0, 1.0, 1.0, 0.9, 0.8, 0.7, 0.7, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI09', nganSach: 5.5, hd: 5.2, sl: [0.4, 0.5, 0.5, 0.5, 0.5, 0.5, 0.4, 0.4, 0.3, 0.3, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 }
-            ]
-        },
-        {
-            id: 'GSW', name: 'GSW',
-            items: [
-                { code: 'THU01', nganSach: 65.0, hd: 62.0, sl: [5.0, 5.5, 5.8, 6.0, 6.2, 6.5, 6.3, 5.8, 5.5, 5.0, 0, 0], bill: [4.5, 5.0, 5.5, 5.8, 6.0, 6.2, 6.0, 5.5, 5.0, 4.5, 0, 0], nhanTT: [4.0, 4.5, 5.0, 5.2, 5.5, 5.8, 5.5, 5.0, 0, 0, 0, 0], congNo: 4.5, overdueDays: 5 },
-                { code: 'THU02', nganSach: 18.0, hd: 16.5, sl: [1.2, 1.3, 1.4, 1.5, 1.5, 1.6, 1.5, 1.4, 1.3, 1.2, 0, 0], bill: [1.0, 1.1, 1.2, 1.3, 1.3, 1.4, 1.3, 1.2, 1.1, 1.0, 0, 0], nhanTT: [0.8, 0.9, 1.0, 1.1, 1.1, 1.2, 1.1, 1.0, 0, 0, 0, 0], congNo: 1.8, overdueDays: 0 },
-                { code: 'THU03', nganSach: 5.5, hd: 5.0, sl: [0.3, 0.4, 0.4, 0.5, 0.5, 0.5, 0.4, 0.4, 0.3, 0.3, 0, 0], bill: [0.3, 0.3, 0.4, 0.4, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0, 0], nhanTT: [0.2, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0, 0, 0, 0, 0], congNo: 0.5, overdueDays: 0 },
-                { code: 'CHI01', nganSach: 1.8, hd: 1.6, sl: [0.1, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI02', nganSach: 14.0, hd: 13.2, sl: [1.1, 1.2, 1.3, 1.3, 1.4, 1.4, 1.3, 1.2, 1.1, 1.0, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI03', nganSach: 9.5, hd: 9.0, sl: [0.7, 0.8, 0.8, 0.9, 0.9, 0.9, 0.8, 0.7, 0.7, 0.6, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI04', nganSach: 6.0, hd: 5.5, sl: [0.4, 0.5, 0.5, 0.6, 0.6, 0.6, 0.5, 0.4, 0.4, 0.3, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI05', nganSach: 11.0, hd: 10.5, sl: [0.8, 0.9, 1.0, 1.0, 1.1, 1.1, 1.0, 0.9, 0.8, 0.7, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI06', nganSach: 25.0, hd: 23.5, sl: [1.8, 2.0, 2.2, 2.4, 2.5, 2.6, 2.4, 2.2, 2.0, 1.8, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI07', nganSach: 15.0, hd: 14.2, sl: [1.1, 1.2, 1.3, 1.4, 1.5, 1.5, 1.4, 1.3, 1.2, 1.1, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI08', nganSach: 8.0, hd: 7.5, sl: [0.6, 0.6, 0.7, 0.7, 0.7, 0.8, 0.7, 0.6, 0.5, 0.5, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI09', nganSach: 4.0, hd: 3.8, sl: [0.3, 0.3, 0.3, 0.4, 0.4, 0.4, 0.3, 0.3, 0.2, 0.2, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 }
-            ]
-        },
-        {
-            id: 'VHG', name: 'VHG',
-            items: [
-                { code: 'THU01', nganSach: 45.0, hd: 42.0, sl: [3.5, 3.8, 4.0, 4.2, 4.5, 4.5, 4.2, 3.8, 3.5, 3.2, 0, 0], bill: [3.2, 3.5, 3.8, 4.0, 4.2, 4.2, 3.8, 3.5, 3.2, 2.8, 0, 0], nhanTT: [2.8, 3.2, 3.5, 3.6, 3.8, 3.8, 3.5, 3.0, 0, 0, 0, 0], congNo: 3.2, overdueDays: 45 },
-                { code: 'THU02', nganSach: 12.0, hd: 11.0, sl: [0.8, 0.9, 1.0, 1.0, 1.1, 1.1, 1.0, 0.9, 0.8, 0.7, 0, 0], bill: [0.7, 0.8, 0.9, 0.9, 1.0, 1.0, 0.9, 0.8, 0.7, 0.6, 0, 0], nhanTT: [0.6, 0.7, 0.8, 0.8, 0.9, 0.9, 0.8, 0, 0, 0, 0, 0], congNo: 0.9, overdueDays: 0 },
-                { code: 'CHI01', nganSach: 1.2, hd: 1.1, sl: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI06', nganSach: 18.0, hd: 17.0, sl: [1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.7, 1.5, 1.4, 1.2, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI07', nganSach: 10.0, hd: 9.5, sl: [0.8, 0.8, 0.9, 0.9, 1.0, 1.0, 0.9, 0.8, 0.8, 0.7, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 }
-            ]
-        },
-        {
-            id: 'TPK', name: 'TPK',
-            items: [
-                { code: 'THU01', nganSach: 38.0, hd: 36.0, sl: [3.0, 3.2, 3.5, 3.6, 3.8, 3.8, 3.5, 3.2, 3.0, 2.8, 0, 0], bill: [2.8, 3.0, 3.2, 3.4, 3.6, 3.5, 3.2, 3.0, 2.8, 2.5, 0, 0], nhanTT: [2.5, 2.8, 3.0, 3.1, 3.3, 3.2, 2.9, 2.5, 0, 0, 0, 0], congNo: 2.8, overdueDays: 14 },
-                { code: 'CHI06', nganSach: 15.0, hd: 14.0, sl: [1.1, 1.2, 1.3, 1.4, 1.5, 1.5, 1.4, 1.2, 1.1, 1.0, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 },
-                { code: 'CHI07', nganSach: 8.0, hd: 7.5, sl: [0.6, 0.7, 0.7, 0.8, 0.8, 0.8, 0.7, 0.6, 0.6, 0.5, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 }
-            ]
-        },
-        {
-            id: 'BDN', name: 'BDN',
-            items: [
-                { code: 'THU01', nganSach: 28.0, hd: 26.0, sl: [2.0, 2.2, 2.5, 2.6, 2.8, 2.8, 2.5, 2.2, 2.0, 1.8, 0, 0], bill: [1.8, 2.0, 2.3, 2.4, 2.6, 2.5, 2.3, 2.0, 1.8, 1.5, 0, 0], nhanTT: [1.5, 1.8, 2.0, 2.1, 2.3, 2.2, 2.0, 1.5, 0, 0, 0, 0], congNo: 1.9, overdueDays: 22 },
-                { code: 'CHI06', nganSach: 10.0, hd: 9.5, sl: [0.7, 0.8, 0.9, 1.0, 1.0, 1.0, 0.9, 0.8, 0.7, 0.6, 0, 0], bill: [], nhanTT: [], congNo: 0, overdueDays: 0 }
-            ]
-        }
-    ],
-    periods: ['T01', 'T02', 'T03', 'T04', 'T05', 'T06', 'T07', 'T08', 'T09', 'T10', 'T11', 'T12']
-};
-
+// Page 4 Charts (initially Page 1)
 function initPage1() {
-    renderBudgetKPIs();
-    renderBarCongNo();
-    renderBarBudgetExecution();
-    renderBudgetDetailTable();
+    charts.pieStatus = echarts.init(document.getElementById('pieStatus'));
+    charts.pieStatus.setOption({
+        title: {
+            text: 'Trạng thái của các phiếu điều chỉnh',
+            left: 'center',
+            textStyle: { fontSize: 13, fontWeight: 'normal', color: '#64748B' }
+        },
+        tooltip: { trigger: 'item' },
+        legend: {
+            bottom: 0,
+            left: 'center',
+            textStyle: { color: '#64748B', fontSize: 10 },
+            itemGap: 8
+        },
+        series: [{
+            type: 'pie',
+            radius: ['35%', '60%'],
+            center: ['50%', '55%'],
+            label: { show: false },
+            data: [
+                { value: 2, name: 'Quá hạn', itemStyle: { color: '#DC2626' } },
+                { value: 6, name: 'Trong hạn', itemStyle: { color: '#16A34A' } }
+            ]
+        }]
+    });
+    renderBarThuTotal('v1');
+    renderBarChiTotal('v1');
+    renderBarThuStructure();
+    renderBarChiStructure();
+    renderBudgetTables();
 }
 
-function renderBudgetKPIs() {
-    const projects = budgetMgmtData.projects;
-    const totalProjects = projects.length;
+function renderBudgetDiff() {
+    const projects = ['DA 1', 'DA 2', 'DA 3', 'DA 4', 'DA 5'];
+    // Chênh lệch = Thu - Chi
+    const diffData = [4.0, 5.5, 7.2, 8.8, 10.5];
+    if (!charts.barBudgetDiff) charts.barBudgetDiff = echarts.init(document.getElementById('barBudgetDiff'));
+    charts.barBudgetDiff.setOption({
+        tooltip: { trigger: 'axis' },
+        grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+        xAxis: { type: 'value', axisLabel: { color: '#64748B', formatter: v => v + ' tỷ' } },
+        yAxis: { type: 'category', data: projects, axisLabel: { color: '#64748B', fontSize: 10 } },
+        series: [{
+            name: 'Chênh lệch Thu-Chi',
+            type: 'bar',
+            data: diffData,
+            itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                    { offset: 0, color: '#3B82F6' },
+                    { offset: 1, color: '#60A5FA' }
+                ]),
+                borderRadius: [0, 4, 4, 0]
+            },
+            label: { show: true, position: 'right', formatter: '{c} tỷ', fontSize: 10 }
+        }]
+    });
+}
 
-    // Tổng công nợ
-    let totalCongNo = 0;
-    let totalBill = 0;
-    let totalNhanTT = 0;
-    let totalHD = 0;
+function renderBarThuTotal(ver) {
+    const projects = ['DA 1', 'DA 2', 'DA 3', 'DA 4', 'DA 5'];
+    const d1 = ver === 'v1' ? [42, 38, 35, 28, 22] : [45, 41, 38, 31, 25];
+    const d2 = ver === 'v1' ? [45, 41, 38, 31, 25] : [48, 44, 41, 34, 28];
+    const l1 = ver === 'v1' ? 'Ban đầu' : 'Gần nhất';
+    const l2 = ver === 'v1' ? 'Gần nhất' : 'Điều chỉnh';
+    const c1 = ver === 'v1' ? '#3B82F6' : '#16A34A'; // Ban đầu: xanh nước biển, Gần nhất: xanh lá
+    const c2 = ver === 'v1' ? '#16A34A' : '#F59E0B'; // Gần nhất: xanh lá, Điều chỉnh: vàng
+    if (!charts.barThuTotal) charts.barThuTotal = echarts.init(document.getElementById('barThuTotal'));
+    charts.barThuTotal.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: [l1, l2], textStyle: { color: '#64748B', fontSize: 10 }, top: 0 },
+        grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+        yAxis: { type: 'category', data: projects, axisLabel: { color: '#64748B', fontSize: 10 } },
+        xAxis: { type: 'value', axisLabel: { color: '#64748B', formatter: v => v + ' tỷ' } },
+        series: [
+            { name: l1, type: 'bar', data: d1, itemStyle: { color: c1 } },
+            { name: l2, type: 'bar', data: d2, itemStyle: { color: c2 } }
+        ]
+    });
+}
 
-    projects.forEach(p => {
-        p.items.forEach(item => {
-            totalCongNo += item.congNo;
-            totalHD += item.hd;
-            if (item.bill.length) totalBill += item.bill.reduce((a, b) => a + b, 0);
-            if (item.nhanTT.length) totalNhanTT += item.nhanTT.reduce((a, b) => a + b, 0);
+function renderBarChiTotal(ver) {
+    const projects = ['DA 1', 'DA 2', 'DA 3', 'DA 4', 'DA 5'];
+    const d1 = ver === 'v1' ? [38, 32, 28, 22, 18] : [42, 36, 32, 26, 22];
+    const d2 = ver === 'v1' ? [42, 36, 32, 26, 22] : [46, 40, 36, 30, 26];
+    const l1 = ver === 'v1' ? 'Ban đầu' : 'Gần nhất';
+    const l2 = ver === 'v1' ? 'Gần nhất' : 'Điều chỉnh';
+    const c1 = ver === 'v1' ? '#3B82F6' : '#16A34A'; // Ban đầu: xanh nước biển, Gần nhất: xanh lá
+    const c2 = ver === 'v1' ? '#16A34A' : '#F59E0B'; // Gần nhất: xanh lá, Điều chỉnh: vàng
+    if (!charts.barChiTotal) charts.barChiTotal = echarts.init(document.getElementById('barChiTotal'));
+    charts.barChiTotal.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: [l1, l2], textStyle: { color: '#64748B', fontSize: 10 }, top: 0 },
+        grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+        yAxis: { type: 'category', data: projects, axisLabel: { color: '#64748B', fontSize: 10 } },
+        xAxis: { type: 'value', axisLabel: { color: '#64748B', formatter: v => v + ' tỷ' } },
+        series: [
+            { name: l1, type: 'bar', data: d1, itemStyle: { color: c1 } },
+            { name: l2, type: 'bar', data: d2, itemStyle: { color: c2 } }
+        ]
+    });
+}
+
+function renderBarThuStructure() {
+    const cats = demoData.thuItems.map(i => i.shortName);
+    if (!charts.barThuStructure) charts.barThuStructure = echarts.init(document.getElementById('barThuStructure'));
+    charts.barThuStructure.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['Ban đầu', 'Gần nhất', 'Điều chỉnh'], textStyle: { color: '#64748B', fontSize: 9 }, top: 0 },
+        grid: { left: '3%', right: '4%', bottom: '15%', containLabel: true },
+        xAxis: { type: 'category', data: cats, axisLabel: { color: '#64748B', fontSize: 9, interval: 0 } },
+        yAxis: { type: 'value', axisLabel: { color: '#64748B', fontSize: 9, formatter: v => v } },
+        series: [
+            { name: 'Ban đầu', type: 'line', data: demoData.versions.thu.banDau, itemStyle: { color: '#3B82F6' }, symbol: 'circle' },
+            { name: 'Gần nhất', type: 'line', data: demoData.versions.thu.ganNhat, itemStyle: { color: '#16A34A' }, symbol: 'rect' },
+            { name: 'Điều chỉnh', type: 'line', data: demoData.versions.thu.dieuChinh, itemStyle: { color: '#F59E0B' }, symbol: 'triangle' }
+        ]
+    });
+}
+
+function renderBarChiStructure() {
+    const chiCats = demoData.chiItems.slice(0, 8).map(i => i.shortName);
+    if (!charts.barChiStructure) charts.barChiStructure = echarts.init(document.getElementById('barChiStructure'));
+    charts.barChiStructure.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['Ban đầu', 'Gần nhất', 'Điều chỉnh'], textStyle: { color: '#64748B', fontSize: 9 }, top: 0 },
+        grid: { left: '3%', right: '4%', bottom: '15%', containLabel: true },
+        xAxis: { type: 'category', data: chiCats, axisLabel: { color: '#64748B', fontSize: 9, interval: 0 } },
+        yAxis: { type: 'value', axisLabel: { color: '#64748B', fontSize: 9, formatter: v => v } },
+        series: [
+            { name: 'Ban đầu', type: 'line', data: demoData.versions.chi.banDau.slice(0, 8), itemStyle: { color: '#3B82F6' }, symbol: 'circle' },
+            { name: 'Gần nhất', type: 'line', data: demoData.versions.chi.ganNhat.slice(0, 8), itemStyle: { color: '#16A34A' }, symbol: 'rect' },
+            { name: 'Điều chỉnh', type: 'line', data: demoData.versions.chi.dieuChinh.slice(0, 8), itemStyle: { color: '#F59E0B' }, symbol: 'triangle' }
+        ]
+    });
+}
+
+function renderBudgetTables() {
+    const dataTotal = {
+        rows: [
+            'THU.01 - Thu từ Chủ ĐT',
+            'THU.02 - Thu HĐ Tài chính',
+            'THU.03 - Thu Nguồn khác',
+            'CHI.01 - Pháp lý',
+            'CHI.02 - Kiến thiết',
+            'CHI.03 - Bán hàng',
+            'CHI.06 - Nhân công',
+            'CHI.07 - Vật tư'
+        ],
+        v1: [[38.2, 40.1, 41.5, 42.8, 43.5, 44.2], [20.0, 21.0, 22.0, 23.0, 23.8, 24.5], [10.8, 11.2, 11.8, 12.5, 13.2, 13.8], [1.2, 1.3, 1.4, 1.5, 1.6, 1.7], [13.5, 14.2, 14.8, 15.5, 16.2, 16.8], [9.2, 9.8, 10.3, 10.8, 11.3, 11.8], [25.5, 26.8, 27.5, 28.2, 29.0, 29.8], [14.2, 15.0, 15.8, 16.5, 17.2, 17.8]],
+        v2: [[38.2, 40.1, 41.5, 42.8, 43.5, 44.2], [20.0, 21.0, 22.0, 23.0, 23.8, 24.5], [12.5, 13.2, 13.8, 14.5, 15.2, 15.8], [1.4, 1.5, 1.6, 1.7, 1.8, 1.9], [14.8, 15.5, 16.2, 16.8, 17.5, 18.2], [10.0, 10.5, 11.0, 11.5, 12.0, 12.5], [25.5, 26.8, 27.5, 28.2, 29.0, 29.8], [15.5, 16.2, 16.8, 17.5, 18.2, 18.8]],
+        v3: [[45.5, 47.2, 48.8, 50.5, 52.2, 53.8], [23.5, 24.5, 26.0, 27.5, 29.0, 30.5], [12.5, 13.2, 13.8, 14.5, 15.2, 15.8], [1.6, 1.7, 1.8, 1.9, 2.0, 2.1], [16.2, 16.8, 17.5, 18.2, 18.8, 19.5], [11.2, 11.8, 12.3, 12.8, 13.3, 13.8], [30.0, 31.0, 32.0, 33.0, 34.0, 35.0], [17.0, 17.8, 18.5, 19.2, 19.8, 20.5]]
+    };
+
+    const dataDetail = {
+        rows: [
+            'THU.01 - Thu từ Chủ ĐT',
+            'THU.01.01 - Tư vấn',
+            'THU.01.02 - Rao sự',
+            'CHI.01 - Pháp lý',
+            'CHI.01.10 - Hồ sơ pháp lý',
+            'CHI.06 - Nhân công',
+            'CHI.06.30 - Gói thầu KC',
+            'CHI.06.30.31 - Gói thầu KC A'
+        ],
+        v1: [[38.2, 40.1, 41.5, 42.8, 43.5, 44.2], [22.5, 23.8, 24.5, 25.2, 25.8, 26.5], [15.7, 16.3, 16.8, 17.3, 17.8, 18.3], [1.2, 1.3, 1.4, 1.5, 1.6, 1.7], [0.8, 0.9, 0.9, 1.0, 1.0, 1.1], [25.5, 26.8, 27.5, 28.2, 29.0, 29.8], [7.8, 8.2, 8.5, 8.8, 9.2, 9.5], [2.2, 2.3, 2.4, 2.5, 2.6, 2.7]],
+        v2: [[38.2, 40.1, 41.5, 42.8, 43.5, 44.2], [22.5, 23.8, 24.5, 25.2, 25.8, 26.5], [17.0, 17.3, 17.8, 18.3, 18.8, 19.3], [1.4, 1.5, 1.6, 1.7, 1.8, 1.9], [0.9, 1.0, 1.0, 1.1, 1.1, 1.2], [25.5, 26.8, 27.5, 28.2, 29.0, 29.8], [8.5, 8.9, 9.2, 9.5, 9.8, 10.2], [2.5, 2.6, 2.7, 2.8, 2.9, 3.0]],
+        v3: [[45.5, 47.2, 48.8, 50.5, 52.2, 53.8], [27.8, 29.0, 30.0, 31.0, 32.0, 33.0], [17.0, 17.3, 17.8, 18.3, 18.8, 19.3], [1.6, 1.7, 1.8, 1.9, 2.0, 2.1], [1.0, 1.1, 1.1, 1.2, 1.2, 1.3], [30.0, 31.0, 32.0, 33.0, 34.0, 35.0], [9.5, 9.9, 10.2, 10.5, 10.8, 11.2], [2.8, 2.9, 3.0, 3.1, 3.2, 3.3]]
+    };
+
+    const data = currentBudgetType === 'total' ? dataTotal : dataDetail;
+    const cols = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'];
+
+    const genTable = (versionId) => {
+        const versionData = data[versionId];
+        const otherVersionIds = ['v1', 'v2', 'v3'].filter(id => id !== versionId);
+
+        let html = '<table class="data-table"><thead><tr><th style="font-size:10px;">Hạng mục</th>';
+        cols.forEach(c => html += `<th style="font-size:10px;">${c}</th>`);
+        html += '</tr></thead><tbody>';
+
+        data.rows.forEach((rowName, rowIdx) => {
+            html += `<tr><td style="font-size:10px;">${rowName}</td>`;
+            versionData[rowIdx].forEach((val, colIdx) => {
+                const otherVal1 = data[otherVersionIds[0]][rowIdx][colIdx];
+                const otherVal2 = data[otherVersionIds[1]][rowIdx][colIdx];
+
+                let bgColor = '';
+                if (val === otherVal1 || val === otherVal2) {
+                    bgColor = '#FEF9C3'; // Vàng: Giống ít nhất 1 cái khác
+                } else {
+                    bgColor = '#FEE2E2'; // Đỏ: Khác cả 2 cái còn lại
+                }
+
+                html += `<td style="background-color: ${bgColor}; font-size:10px;">${val.toFixed(1)}</td>`;
+            });
+            html += '</tr>';
         });
+        return html + '</tbody></table>';
+    };
+
+    document.getElementById('tableV1').innerHTML = genTable('v1');
+    document.getElementById('tableV2').innerHTML = genTable('v2');
+    document.getElementById('tableV3').innerHTML = genTable('v3');
+}
+
+// Page 2 Charts (Page 1 mới: Hiệu Quả Thu - Chi)
+function initPage2() {
+    renderGaugesPage1();
+    renderFHIChart();
+    renderLineCumulative();
+    renderMonthlyComboCharts();
+    renderStructureBars();
+}
+
+// Render gauges for Page 1 (all projects average)
+function renderGaugesPage1() {
+    // Calculate average across all projects
+    const totalActualThu = demoData.projects.reduce((sum, p) => sum + p.actualThu, 0);
+    const totalBudgetThu = demoData.projects.reduce((sum, p) => sum + p.budgetThuTotal, 0);
+    const totalActualChi = demoData.projects.reduce((sum, p) => sum + p.actualChi, 0);
+    const totalBudgetChi = demoData.projects.reduce((sum, p) => sum + p.budgetChiTotal, 0);
+
+    const thuPct = Math.round(totalActualThu / totalBudgetThu * 100);
+    const chiPct = Math.round(totalActualChi / totalBudgetChi * 100);
+
+    charts.gaugeThu = echarts.init(document.getElementById('gaugeThu'));
+    charts.gaugeThu.setOption({
+        series: [{
+            type: 'gauge', startAngle: 180, endAngle: 0, min: 0, max: 100,
+            radius: '95%',
+            center: ['50%', '70%'],
+            pointer: { show: true, length: '60%', width: 4 },
+            axisLine: { lineStyle: { width: 25, color: [[0.6, '#DC2626'], [0.8, '#F59E0B'], [1, '#16A34A']] } },
+            axisTick: { show: false }, splitLine: { show: false },
+            axisLabel: { show: false },
+            detail: { formatter: '{value}%', fontSize: 18, color: '#0F172A', offsetCenter: [0, '35%'] },
+            data: [{ value: thuPct }]
+        }]
     });
 
-    const collectRate = totalBill > 0 ? ((totalNhanTT / totalBill) * 100).toFixed(1) : 0;
-
-    document.getElementById('kpiBudgetProjects').textContent = totalProjects;
-    document.getElementById('kpiBudgetCongNo').textContent = totalCongNo.toFixed(1) + ' tỷ';
-    document.getElementById('kpiBudgetCollect').textContent = collectRate + '%';
-    document.getElementById('kpiBudgetHD').textContent = totalHD.toFixed(1) + ' tỷ';
+    charts.gaugeChi = echarts.init(document.getElementById('gaugeChi'));
+    charts.gaugeChi.setOption({
+        series: [{
+            type: 'gauge', startAngle: 180, endAngle: 0, min: 0, max: 100,
+            radius: '95%',
+            center: ['50%', '70%'],
+            pointer: { show: true, length: '60%', width: 4 },
+            axisLine: { lineStyle: { width: 25, color: [[0.6, '#16A34A'], [0.8, '#F59E0B'], [1, '#DC2626']] } },
+            axisTick: { show: false }, splitLine: { show: false },
+            axisLabel: { show: false },
+            detail: { formatter: '{value}%', fontSize: 18, color: '#0F172A', offsetCenter: [0, '35%'] },
+            data: [{ value: chiPct }]
+        }]
+    });
 }
 
-function renderBarCongNo() {
-    // Calculate công nợ per project
-    const projectCongNo = budgetMgmtData.projects.map(p => {
-        const congNo = p.items.reduce((sum, item) => sum + item.congNo, 0);
-        return { name: p.name, value: +congNo.toFixed(1) };
-    }).sort((a, b) => b.value - a.value);
+// Render cumulative line chart
+function renderLineCumulative() {
+    const cumThu = [7, 14, 21, 28, 36, 43, 51, 59, 67, 75, 82, 85];
+    const cumChi = [6, 12, 18, 24, 30, 37, 44, 50, 57, 64, 70, 72];
+    charts.lineCumulative = echarts.init(document.getElementById('lineCumulative'));
+    charts.lineCumulative.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['Lũy kế Thu', 'Lũy kế Chi'], textStyle: { color: '#64748B', fontSize: 10 }, top: 0 },
+        grid: { left: '3%', right: '4%', bottom: '10%', top: '15%', containLabel: true },
+        xAxis: { type: 'category', data: demoData.months, axisLabel: { color: '#64748B', fontSize: 10 } },
+        yAxis: { type: 'value', axisLabel: { color: '#64748B', formatter: v => v + ' tỷ', fontSize: 10 } },
+        series: [
+            { name: 'Lũy kế Thu', type: 'line', smooth: true, data: cumThu, lineStyle: { color: '#16A34A', width: 2 }, itemStyle: { color: '#16A34A' }, areaStyle: { color: 'rgba(22,163,74,0.1)' }, symbol: 'circle', symbolSize: 4 },
+            { name: 'Lũy kế Chi', type: 'line', smooth: true, data: cumChi, lineStyle: { color: '#DC2626', width: 2 }, itemStyle: { color: '#DC2626' }, areaStyle: { color: 'rgba(220,38,38,0.1)' }, symbol: 'circle', symbolSize: 4 }
+        ]
+    });
+}
 
-    charts.barCongNo = echarts.init(document.getElementById('barCongNo'));
-    charts.barCongNo.setOption({
+// Render FHI horizontal bar chart with average markLine
+function renderFHIChart() {
+    const data = demoData.projectFHI;
+    const threshold = demoData.fhiThreshold;
+    const projectNames = data.map(d => d.name);
+    const fhiValues = data.map(d => d.fhi);
+    const avgFHI = (fhiValues.reduce((a, b) => a + b, 0) / fhiValues.length).toFixed(2);
+
+    // Count projects above threshold
+    const aboveThreshold = data.filter(d => d.fhi >= threshold).length;
+    const percentage = Math.round(aboveThreshold / data.length * 100);
+
+    // Update subtitle
+    document.getElementById('fhiSubtitle').innerHTML =
+        `<span style="color:var(--success);font-weight:600;">${aboveThreshold}/${data.length}</span> dự án có FHI ≥ ${threshold} (<span style="color:var(--success);font-weight:600;">${percentage}%</span>) | FHI Trung bình: <span style="color:var(--warning);font-weight:600;">${avgFHI}</span>`;
+
+    charts.barFHI = echarts.init(document.getElementById('barFHI'));
+    charts.barFHI.setOption({
         tooltip: {
             trigger: 'axis',
             axisPointer: { type: 'shadow' },
             formatter: params => {
                 const p = params[0];
-                return `<strong>${p.name}</strong><br/>Công nợ: <strong style="color:#DC2626;">${p.value} tỷ</strong>`;
+                const status = p.value >= threshold ? '✅ Đạt' : '⚠️ Chưa đạt';
+                return `<strong>${p.name}</strong><br/>FHI: <strong>${p.value}</strong><br/>Trạng thái: ${status}`;
             }
         },
-        grid: { left: '3%', right: '12%', bottom: '3%', top: '8%', containLabel: true },
+        grid: { left: '3%', right: '8%', bottom: '0%', top: '10%', containLabel: true },
+        xAxis: {
+            type: 'value',
+            min: 0,
+            max: 2,
+            axisLabel: { color: '#64748B' },
+            splitLine: { lineStyle: { color: '#E2E8F0' } }
+        },
         yAxis: {
             type: 'category',
-            data: projectCongNo.map(p => p.name),
-            axisLabel: { color: '#64748B', fontSize: 12, fontWeight: 600 },
+            data: projectNames,
+            axisLabel: { color: '#64748B', fontSize: 11 },
             axisTick: { show: false },
             axisLine: { lineStyle: { color: '#E2E8F0' } }
         },
-        xAxis: {
-            type: 'value',
-            axisLabel: { color: '#64748B', formatter: v => v + ' tỷ' },
-            splitLine: { lineStyle: { color: '#E2E8F0', type: 'dashed' } }
-        },
         series: [{
             type: 'bar',
-            data: projectCongNo.map((p, i) => ({
-                value: p.value,
+            data: fhiValues.map(v => ({
+                value: v,
                 itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                        { offset: 0, color: i === 0 ? '#DC2626' : (i === 1 ? '#F59E0B' : '#3B82F6') },
-                        { offset: 1, color: i === 0 ? '#EF4444' : (i === 1 ? '#FBBF24' : '#60A5FA') }
-                    ]),
-                    borderRadius: [0, 6, 6, 0]
+                    color: v >= threshold ? '#16A34A' : '#F59E0B',
+                    borderRadius: [0, 4, 4, 0]
                 }
             })),
-            barWidth: '55%',
+            barWidth: '60%',
             label: {
                 show: true,
                 position: 'right',
-                formatter: '{c} tỷ',
+                formatter: '{c}',
                 color: '#64748B',
-                fontSize: 12,
-                fontWeight: 600
-            }
-        }]
-    });
-}
-
-function renderBarBudgetExecution() {
-    const projectNames = budgetMgmtData.projects.map(p => p.name);
-
-    // Per project: total Bill, total Nhận TT, tỷ lệ thu hồi, tổng công nợ
-    const billData = budgetMgmtData.projects.map(p => {
-        const total = p.items.reduce((sum, item) => sum + item.bill.reduce((a, b) => a + b, 0), 0);
-        return +total.toFixed(1);
-    });
-    const nhanTTData = budgetMgmtData.projects.map(p => {
-        const total = p.items.reduce((sum, item) => sum + item.nhanTT.reduce((a, b) => a + b, 0), 0);
-        return +total.toFixed(1);
-    });
-    const tyleData = billData.map((bill, i) =>
-        bill > 0 ? +(nhanTTData[i] / bill * 100).toFixed(1) : 0
-    );
-    const congNoData = budgetMgmtData.projects.map(p =>
-        +p.items.reduce((sum, item) => sum + item.congNo, 0).toFixed(1)
-    );
-
-    if (!charts.barBudgetExecution) {
-        charts.barBudgetExecution = echarts.init(document.getElementById('barBudgetExecution'));
-    }
-    charts.barBudgetExecution.setOption({
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: { type: 'shadow' },
-            formatter: params => {
-                let html = `<strong>${params[0].name}</strong><br/>`;
-                params.forEach(p => {
-                    const unit = p.seriesName === 'Tỷ lệ thu hồi' ? '%' : ' tỷ';
-                    html += `<span style="color:${p.color}">●</span> ${p.seriesName}: <strong>${p.value}${unit}</strong><br/>`;
-                });
-                const billP = params.find(p => p.seriesName === 'Đã bill');
-                const ttP = params.find(p => p.seriesName === 'Đã nhận TT');
-                if (billP && ttP) {
-                    const gap = (billP.value - ttP.value).toFixed(1);
-                    html += `<span style="color:#DC2626">●</span> Còn phải thu: <strong style="color:#DC2626">${gap} tỷ</strong>`;
-                }
-                return html;
-            }
-        },
-        legend: {
-            data: ['Đã bill', 'Đã nhận TT', 'Tỷ lệ thu hồi'],
-            textStyle: { color: '#64748B', fontSize: 10 },
-            top: 0
-        },
-        grid: { left: '3%', right: '10%', bottom: '5%', top: '14%', containLabel: true },
-        xAxis: {
-            type: 'category',
-            data: projectNames,
-            axisLabel: { color: '#1E293B', fontSize: 11, fontWeight: 600 },
-            axisTick: { show: false }
-        },
-        yAxis: [
-            {
-                type: 'value',
-                name: 'Tỷ đồng',
-                nameTextStyle: { color: '#64748B', fontSize: 10 },
-                axisLabel: { color: '#64748B', fontSize: 10, formatter: v => v + ' tỷ' },
-                splitLine: { lineStyle: { color: '#E2E8F0', type: 'dashed' } }
+                fontSize: 11
             },
-            {
-                type: 'value',
-                name: 'Tỷ lệ (%)',
-                nameTextStyle: { color: '#64748B', fontSize: 10 },
-                min: 0, max: 100,
-                axisLabel: { color: '#64748B', fontSize: 10, formatter: v => v + '%' },
-                splitLine: { show: false }
-            }
-        ],
-        series: [
-            {
-                name: 'Đã bill',
-                type: 'bar',
-                yAxisIndex: 0,
-                data: billData,
-                barWidth: '35%',
-                itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: 'rgba(37,99,235,0.85)' },
-                        { offset: 1, color: 'rgba(37,99,235,0.3)' }
-                    ]),
-                    borderRadius: [4, 4, 0, 0]
-                }
-            },
-            {
-                name: 'Đã nhận TT',
-                type: 'bar',
-                yAxisIndex: 0,
-                data: nhanTTData,
-                barWidth: '35%',
-                itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: 'rgba(22,163,74,0.85)' },
-                        { offset: 1, color: 'rgba(22,163,74,0.3)' }
-                    ]),
-                    borderRadius: [4, 4, 0, 0]
-                }
-            },
-            {
-                name: 'Tỷ lệ thu hồi',
-                type: 'line',
-                yAxisIndex: 1,
-                data: tyleData,
-                smooth: true,
-                symbol: 'circle',
-                symbolSize: 8,
-                lineStyle: { color: '#F59E0B', width: 2.5 },
-                itemStyle: { color: '#F59E0B', borderWidth: 2, borderColor: '#fff' },
+            markLine: {
+                silent: true,
+                symbol: 'none',
+                lineStyle: { color: '#DC2626', width: 2, type: 'dashed' },
                 label: {
                     show: true,
-                    position: 'top',
-                    formatter: '{c}%',
-                    fontSize: 10,
-                    fontWeight: 700,
-                    color: '#B45309'
-                }
+                    position: 'end',
+                    formatter: 'TB: {c}',
+                    color: '#DC2626',
+                    fontWeight: 'bold'
+                },
+                data: [{ xAxis: parseFloat(avgFHI) }]
             }
-        ]
-    });
-}
-
-function renderBudgetDetailTable(filterProject) {
-    const periods = budgetMgmtData.periods;
-    const projects = filterProject && filterProject !== 'all'
-        ? budgetMgmtData.projects.filter(p => p.id === filterProject)
-        : budgetMgmtData.projects;
-
-    // Common sticky style strings
-    // Row-1 header (top:0), Row-2 header (top:36px)
-    // Col "Dự án" (left:0), Col "Mã NS" (left:55px)
-    // Corner cells need both top + left + highest z-index
-    const thBase = `padding:8px 6px;font-size:11px;font-weight:600;white-space:nowrap;border-bottom:1px solid #CBD5E1;`;
-
-    // sticky-top styles for normal header cells
-    const stickyTop      = `position:sticky;top:0;z-index:5;`;
-    const stickyTop36    = `position:sticky;top:36px;z-index:4;`;
-    // sticky-left styles for body cells
-    const stickyL0body   = `position:sticky;left:0;z-index:3;`;
-    const stickyL55body  = `position:sticky;left:55px;z-index:3;`;
-    // corner = sticky both directions — highest z-index
-    const cornerTopL0    = `position:sticky;top:0;left:0;z-index:20;`;
-    const cornerTopL55   = `position:sticky;top:0;left:55px;z-index:20;`;
-
-    let html = `<table style="font-size:11px;border-collapse:collapse;border-spacing:0;width:100%;min-width:1200px;">`;
-    html += `<thead>`;
-
-    // ── Row 1: group headers ──────────────────────────────────────────────
-    html += `<tr style="height:36px;">`;
-
-    // Corner: Dự án (rowspan 2)
-    html += `<th rowspan="2" style="${thBase}${cornerTopL0}width:55px;min-width:55px;max-width:55px;text-align:left;background:#FEE2E2;border-right:2px solid #FCA5A5;">Dự án</th>`;
-    // Corner: Mã NS (rowspan 2)
-    html += `<th rowspan="2" style="${thBase}${cornerTopL55}width:65px;min-width:65px;max-width:65px;text-align:left;background:#FEE2E2;border-right:1px solid #E2E8F0;box-shadow:2px 0 4px -2px rgba(0,0,0,0.08);">Mã NS</th>`;
-    // Non-sticky headers (rowspan 2)
-    html += `<th rowspan="2" style="${thBase}${stickyTop}min-width:72px;text-align:right;background:#F1F5F9;">Ngân sách</th>`;
-    html += `<th rowspan="2" style="${thBase}${stickyTop}min-width:60px;text-align:right;background:#F1F5F9;">HĐ</th>`;
-    // Group spans
-    html += `<th colspan="${periods.length}" style="${thBase}${stickyTop}text-align:center;background:#DBEAFE;border-bottom:2px solid #93C5FD;">Sản lượng</th>`;
-    html += `<th colspan="${periods.length}" style="${thBase}${stickyTop}text-align:center;background:#DCFCE7;border-bottom:2px solid #86EFAC;">Bill</th>`;
-    html += `<th colspan="${periods.length}" style="${thBase}${stickyTop}text-align:center;background:#FEF3C7;border-bottom:2px solid #FDE68A;">Nhận thanh toán</th>`;
-    html += `<th rowspan="2" style="${thBase}${stickyTop}min-width:72px;text-align:right;background:#FEE2E2;color:#DC2626;font-weight:700;">Công nợ</th>`;
-    html += `<th rowspan="2" style="${thBase}${stickyTop}min-width:68px;text-align:center;background:#F1F5F9;">TG quá hạn<br>(ngày)</th>`;
-    html += `</tr>`;
-
-    // ── Row 2: period sub-headers ─────────────────────────────────────────
-    html += `<tr style="height:26px;">`;
-    periods.forEach(p => { html += `<th style="${thBase}${stickyTop36}min-width:48px;text-align:right;background:#EFF6FF;font-size:10px;">${p}</th>`; });
-    periods.forEach(p => { html += `<th style="${thBase}${stickyTop36}min-width:48px;text-align:right;background:#F0FDF4;font-size:10px;">${p}</th>`; });
-    periods.forEach(p => { html += `<th style="${thBase}${stickyTop36}min-width:48px;text-align:right;background:#FFFBEB;font-size:10px;">${p}</th>`; });
-    html += `</tr>`;
-    html += `</thead><tbody>`;
-
-    // ── Data rows ─────────────────────────────────────────────────────────
-    const tdBase = `padding:7px 6px;border-bottom:1px solid #E2E8F0;white-space:nowrap;font-size:11px;`;
-
-    projects.forEach((proj, pIdx) => {
-        proj.items.forEach((item, iIdx) => {
-            const isFirst = iIdx === 0;
-            const isThu = item.code.startsWith('THU');
-            const rowBg = isThu ? '#FAFAFA' : '#FFFFFF';
-            const codeColor = isThu ? '#16A34A' : '#DC2626';
-            const codeWeight = isThu ? '700' : '500';
-
-            html += `<tr>`;
-
-            // Dự án cell (rowspan, sticky left:0)
-            if (isFirst) {
-                html += `<td rowspan="${proj.items.length}" style="${tdBase}${stickyL0body}width:55px;min-width:55px;max-width:55px;text-align:left;font-weight:700;color:var(--primary);background:#FFF5F5;border-right:2px solid #FCA5A5;vertical-align:top;padding-top:10px;">${proj.name}</td>`;
-            }
-
-            // Mã NS cell (sticky left:55px)
-            html += `<td style="${tdBase}${stickyL55body}width:65px;min-width:65px;max-width:65px;text-align:left;font-weight:${codeWeight};color:${codeColor};background:${rowBg};border-right:1px solid #E2E8F0;box-shadow:2px 0 4px -2px rgba(0,0,0,0.08);">${item.code}</td>`;
-
-            // Ngân sách
-            html += `<td style="${tdBase}text-align:right;font-weight:600;background:${rowBg};">${item.nganSach.toFixed(1)}</td>`;
-            // HĐ
-            html += `<td style="${tdBase}text-align:right;background:${rowBg};">${item.hd.toFixed(1)}</td>`;
-
-            // Sản lượng
-            item.sl.forEach(v => {
-                const bg = v > 0 ? '#EFF6FF' : rowBg;
-                html += `<td style="${tdBase}text-align:right;background:${bg};color:#2563EB;">${v > 0 ? v.toFixed(1) : ''}</td>`;
-            });
-
-            // Bill
-            if (item.bill.length) {
-                item.bill.forEach(v => {
-                    const bg = v > 0 ? '#F0FDF4' : rowBg;
-                    html += `<td style="${tdBase}text-align:right;background:${bg};color:#16A34A;">${v > 0 ? v.toFixed(1) : ''}</td>`;
-                });
-            } else {
-                periods.forEach(() => { html += `<td style="${tdBase}text-align:center;color:#CBD5E1;background:${rowBg};">—</td>`; });
-            }
-
-            // Nhận TT
-            if (item.nhanTT.length) {
-                item.nhanTT.forEach(v => {
-                    const bg = v > 0 ? '#FFFBEB' : rowBg;
-                    html += `<td style="${tdBase}text-align:right;background:${bg};color:#D97706;">${v > 0 ? v.toFixed(1) : ''}</td>`;
-                });
-            } else {
-                periods.forEach(() => { html += `<td style="${tdBase}text-align:center;color:#CBD5E1;background:${rowBg};">—</td>`; });
-            }
-
-            // Công nợ
-            if (item.congNo > 0) {
-                html += `<td style="${tdBase}text-align:right;background:#FEE2E2;color:#DC2626;font-weight:700;">${item.congNo.toFixed(1)}</td>`;
-            } else {
-                html += `<td style="${tdBase}text-align:right;color:#CBD5E1;background:${rowBg};">—</td>`;
-            }
-
-            // TG Quá hạn
-            const isOverdue = item.overdueDays > 0;
-            const isCrit = item.overdueDays > 40;
-            const overBg = isCrit ? '#FEF2F2' : rowBg;
-            const overColor = isOverdue ? (isCrit ? '#DC2626' : '#F59E0B') : '#CBD5E1';
-            const overW = isCrit ? '700' : '500';
-            html += `<td style="${tdBase}text-align:center;background:${overBg};color:${overColor};font-weight:${overW};">${isOverdue ? item.overdueDays : '—'}</td>`;
-
-            html += `</tr>`;
-        });
-
-        // Separator row between projects
-        if (pIdx < projects.length - 1) {
-            const totalCols = 4 + (periods.length * 3) + 2;
-            html += `<tr><td colspan="${totalCols}" style="height:5px;background:#E2E8F0;padding:0;border:none;"></td></tr>`;
-        }
-    });
-
-    html += `</tbody></table>`;
-    document.getElementById('budgetDetailTable').innerHTML = html;
-}
-
-
-
-function updateBudgetPage() {
-    const filter = document.getElementById('budgetProjectFilter').value;
-    renderBudgetKPIs();
-    renderBarCongNo();
-    renderBarBudgetExecution();
-    renderBudgetDetailTable(filter);
-}
-
-// Page 1 Charts (Quản Lý Dòng Tiền)
-function initPage2() {
-    renderCashflowGauges();
-    renderComboCashflow();
-    renderNetCashflowBar();
-    renderCashflowTable();
-}
-
-// Cashflow data
-const cashflowData = {
-    months: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
-    // Sản lượng (tỷ)
-    slKH:   [8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0, 13.5],
-    slTT:   [7.8, 8.2, 9.1, 9.3, 10.2, 10.8, 11.2, 11.0, 11.8, 12.0, 0, 0],
-    // Chi phí (tỷ)
-    chiKH:  [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5],
-    chiTT:  [4.8, 5.3, 5.8, 6.2, 6.8, 7.2, 7.6, 8.2, 8.7, 9.1, 0, 0],
-    // Thu (tỷ)
-    thuKH:  [6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5],
-    thuTT:  [5.5, 6.2, 7.1, 7.3, 8.1, 8.8, 9.2, 9.0, 9.7, 10.2, 0, 0]
-};
-
-// Tính lũy kế
-function cumSum(arr) {
-    let sum = 0;
-    return arr.map(v => { sum += v; return +sum.toFixed(1); });
-}
-
-// Render 3 gauge charts cho trang Quản Lý Dòng Tiền
-function renderCashflowGauges() {
-    const activeMonths = cashflowData.thuTT.filter(v => v > 0).length;
-
-    const totalThuTT = cashflowData.thuTT.reduce((a, b) => a + b, 0);
-    const totalThuKH = cashflowData.thuKH.slice(0, activeMonths).reduce((a, b) => a + b, 0);
-    const thuPct = Math.round(totalThuTT / totalThuKH * 100);
-
-    const totalChiTT = cashflowData.chiTT.reduce((a, b) => a + b, 0);
-    const totalChiKH = cashflowData.chiKH.slice(0, activeMonths).reduce((a, b) => a + b, 0);
-    const chiPct = Math.round(totalChiTT / totalChiKH * 100);
-
-    const totalSLTT = cashflowData.slTT.reduce((a, b) => a + b, 0);
-    const totalSLKH = cashflowData.slKH.slice(0, activeMonths).reduce((a, b) => a + b, 0);
-    const slPct = Math.round(totalSLTT / totalSLKH * 100);
-
-    // Populate KPI insight cards
-    const nets = cashflowData.months.map((_, i) =>
-        +(cashflowData.thuTT[i] - cashflowData.chiTT[i]).toFixed(1)
-    );
-    const totalNet = nets.reduce((a, b) => a + b, 0);
-    const negMonths = nets.filter((n, i) => cashflowData.thuTT[i] > 0 && n < 0).length;
-    const bestIdx = nets.reduce((bi, v, i, arr) => (v > arr[bi] ? i : bi), 0);
-    const costOverrunPct = totalChiKH > 0 ? ((totalChiTT / totalChiKH - 1) * 100).toFixed(1) : 0;
-
-    const netEl = document.getElementById('kpiNetCashflow');
-    if (netEl) {
-        const netVal = +totalNet.toFixed(1);
-        netEl.textContent = (netVal >= 0 ? '+' : '') + netVal + ' tỷ';
-        netEl.style.color = netVal >= 0 ? 'var(--success)' : 'var(--danger)';
-    }
-    const bestEl = document.getElementById('kpiBestMonth');
-    if (bestEl) bestEl.textContent = cashflowData.months[bestIdx];
-    const bestValEl = document.getElementById('kpiBestMonthVal');
-    if (bestValEl) bestValEl.textContent = '+' + nets[bestIdx].toFixed(1) + ' tỷ ròng';
-    const negEl = document.getElementById('kpiNegMonths');
-    if (negEl) negEl.textContent = negMonths;
-    const overrunEl = document.getElementById('kpiCostOverrun');
-    if (overrunEl) {
-        const ov = +costOverrunPct;
-        overrunEl.textContent = ov > 0 ? '+' + ov + '%' : ov + '%';
-        overrunEl.style.color = ov > 5 ? 'var(--danger)' : ov > 0 ? 'var(--warning)' : 'var(--success)';
-    }
-
-    const gaugeOpts = (pct, pointerColor, colorMap) => ({
-        series: [{
-            type: 'gauge', startAngle: 200, endAngle: -20, min: 0, max: 130,
-            radius: '88%', center: ['50%', '65%'],
-            pointer: { show: true, length: '60%', width: 5, itemStyle: { color: pointerColor } },
-            axisLine: { lineStyle: { width: 14, color: colorMap } },
-            axisTick: { show: false }, splitLine: { show: false },
-            axisLabel: { show: false },
-            title: { show: true, offsetCenter: [0, '68%'], fontSize: 9, color: '#94A3B8', fontWeight: 500 },
-            detail: { formatter: '{value}%', fontSize: 22, color: '#0F172A', offsetCenter: [0, '32%'], fontWeight: 700 },
-            data: [{ value: pct }]
         }]
     });
-
-    if (!charts.gaugeThu) charts.gaugeThu = echarts.init(document.getElementById('gaugeThu'));
-    charts.gaugeThu.setOption(gaugeOpts(thuPct, '#16A34A',
-        [[0.5, '#FCA5A5'], [0.7, '#FCD34D'], [0.84, '#4ADE80'], [1, '#16A34A']]));
-
-    if (!charts.gaugeChi) charts.gaugeChi = echarts.init(document.getElementById('gaugeChi'));
-    charts.gaugeChi.setOption(gaugeOpts(chiPct, '#DC2626',
-        [[0.5, '#4ADE80'], [0.7, '#60A5FA'], [0.84, '#FCD34D'], [1, '#DC2626']]));
-
-    if (!charts.gaugeSanLuong) charts.gaugeSanLuong = echarts.init(document.getElementById('gaugeSanLuong'));
-    charts.gaugeSanLuong.setOption(gaugeOpts(slPct, '#2563EB',
-        [[0.5, '#FCA5A5'], [0.7, '#FCD34D'], [0.84, '#4ADE80'], [1, '#16A34A']]));
 }
 
-// Combo chart: Lines (lũy kế Thu/Chi TT + KH) + Bars (Sản lượng TT/KH lũy kế)
-function renderComboCashflow() {
-    const months = cashflowData.months;
+// Combo charts for monthly Thu/Chi
+function renderMonthlyComboCharts() {
+    const months = demoData.months.slice(0, 10);
 
-    // Lũy kế
-    const cumChiTT = cumSum(cashflowData.chiTT);
-    const cumThuTT = cumSum(cashflowData.thuTT);
-    const cumChiKH = cumSum(cashflowData.chiKH);
-    const cumThuKH = cumSum(cashflowData.thuKH);
-    const cumSLTT = cumSum(cashflowData.slTT);
-    const cumSLKH = cumSum(cashflowData.slKH);
+    // Thu data
+    const thuActual = [6.5, 6.5, 6.5, 6.8, 7.2, 7.5, 7.8, 7.2, 7.0, 5.4];
+    const thuBudget = [7.0, 7.2, 7.3, 7.0, 7.3, 7.4, 7.5, 8.0, 8.2, 8.3];
+    const thuDiff = thuActual.map((v, i) => +(v - thuBudget[i]).toFixed(1));
 
-    charts.comboCashflow = echarts.init(document.getElementById('comboCashflow'));
-    charts.comboCashflow.setOption({
+    charts.barMonthlyThu = echarts.init(document.getElementById('barMonthlyThu'));
+    charts.barMonthlyThu.setOption({
         tooltip: {
             trigger: 'axis',
             axisPointer: { type: 'cross' },
             formatter: params => {
                 let html = `<strong>${params[0].axisValue}</strong><br/>`;
                 params.forEach(p => {
-                    html += `<span style="color:${p.color}">●</span> ${p.seriesName}: <strong>${p.value} tỷ</strong><br/>`;
+                    const color = p.seriesName === 'Chênh lệch' ? (p.value >= 0 ? '#16A34A' : '#DC2626') : p.color;
+                    html += `<span style="color:${color}">●</span> ${p.seriesName}: <strong>${p.value} tỷ</strong><br/>`;
                 });
                 return html;
             }
         },
-        legend: {
-            data: ['SL Thực lũy kế', 'SL KH lũy kế', 'Chi phí lũy kế', 'Thu lũy kế', 'Chi phí KH lũy kế', 'Thu KH lũy kế'],
-            textStyle: { color: '#64748B', fontSize: 10 },
-            top: 0,
-            itemGap: 12
-        },
-        grid: { left: '3%', right: '5%', bottom: '10%', top: '14%', containLabel: true },
-        xAxis: {
-            type: 'category',
-            data: months,
-            axisLabel: { color: '#64748B', fontSize: 11 },
-            axisLine: { lineStyle: { color: '#E2E8F0' } }
-        },
-        yAxis: [
-            {
-                type: 'value',
-                name: 'Lũy kế (tỷ)',
-                position: 'left',
-                axisLabel: { color: '#64748B', formatter: v => v + ' tỷ', fontSize: 10 },
-                splitLine: { lineStyle: { color: '#E2E8F0', type: 'dashed' } },
-                nameTextStyle: { color: '#64748B', fontSize: 10 }
-            },
-            {
-                type: 'value',
-                name: 'Sản lượng (tỷ)',
-                position: 'right',
-                axisLabel: { color: '#64748B', formatter: v => v + ' tỷ', fontSize: 10 },
-                splitLine: { show: false },
-                nameTextStyle: { color: '#64748B', fontSize: 10 }
-            }
-        ],
+        legend: { data: ['Thực thu', 'Ngân sách', 'Chênh lệch'], textStyle: { color: '#64748B', fontSize: 10 }, top: 0 },
+        grid: { left: '3%', right: '4%', bottom: '10%', containLabel: true },
+        xAxis: { type: 'category', data: months, axisLabel: { color: '#64748B' } },
+        yAxis: [{
+            type: 'value',
+            name: 'Giá trị (tỷ)',
+            axisLabel: { color: '#64748B', formatter: v => v + ' tỷ' },
+            splitLine: { lineStyle: { color: '#E2E8F0' } }
+        }],
         series: [
-            // Bar: Sản lượng thực lũy kế
             {
-                name: 'SL Thực lũy kế',
+                name: 'Chênh lệch',
                 type: 'bar',
-                yAxisIndex: 1,
-                data: cumSLTT,
-                barWidth: '25%',
-                barGap: '10%',
-                itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: 'rgba(37,99,235,0.7)' },
-                        { offset: 1, color: 'rgba(37,99,235,0.2)' }
-                    ]),
-                    borderRadius: [3, 3, 0, 0]
-                },
-                z: 0
+                data: thuDiff.map(v => ({
+                    value: v,
+                    itemStyle: { color: v >= 0 ? 'rgba(22,163,74,0.6)' : 'rgba(220,38,38,0.6)' }
+                })),
+                barWidth: '40%',
+                label: {
+                    show: true,
+                    position: 'top',
+                    formatter: params => params.value !== 0 ? params.value : '',
+                    fontSize: 9,
+                    color: '#64748B'
+                }
             },
-            // Bar: Sản lượng KH lũy kế
             {
-                name: 'SL KH lũy kế',
-                type: 'bar',
-                yAxisIndex: 1,
-                data: cumSLKH,
-                barWidth: '25%',
-                itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: 'rgba(148,163,184,0.5)' },
-                        { offset: 1, color: 'rgba(148,163,184,0.15)' }
-                    ]),
-                    borderRadius: [3, 3, 0, 0],
-                    borderColor: 'rgba(148,163,184,0.6)',
-                    borderWidth: 1,
-                    borderType: 'dashed'
-                },
-                z: 0
-            },
-            // Line: Chi phí lũy kế thực tế
-            {
-                name: 'Chi phí lũy kế',
+                name: 'Thực thu',
                 type: 'line',
                 smooth: true,
-                data: cumChiTT,
-                lineStyle: { color: '#DC2626', width: 3 },
-                itemStyle: { color: '#DC2626' },
-                symbol: 'circle',
-                symbolSize: 6,
-                z: 5
-            },
-            // Line: Thu lũy kế thực tế
-            {
-                name: 'Thu lũy kế',
-                type: 'line',
-                smooth: true,
-                data: cumThuTT,
+                data: thuActual,
                 lineStyle: { color: '#16A34A', width: 3 },
                 itemStyle: { color: '#16A34A' },
                 symbol: 'circle',
-                symbolSize: 6,
-                z: 5
+                symbolSize: 6
             },
-            // Line dashed: Chi phí KH lũy kế
             {
-                name: 'Chi phí KH lũy kế',
+                name: 'Ngân sách',
                 type: 'line',
                 smooth: true,
-                data: cumChiKH,
-                lineStyle: { color: '#F87171', width: 2, type: 'dashed' },
-                itemStyle: { color: '#F87171' },
+                data: thuBudget,
+                lineStyle: { color: '#3B82F6', width: 2, type: 'dashed' },
+                itemStyle: { color: '#3B82F6' },
                 symbol: 'diamond',
-                symbolSize: 5,
-                z: 4
-            },
-            // Line dashed: Thu KH lũy kế
+                symbolSize: 6
+            }
+        ]
+    });
+
+    // Chi data
+    const chiActual = [5.5, 5.5, 5.8, 5.7, 5.8, 5.9, 6.3, 6.5, 7.0, 7.2];
+    const chiBudget = [6.0, 6.1, 6.0, 6.0, 6.1, 6.2, 6.5, 6.8, 7.2, 7.5];
+    const chiDiff = chiActual.map((v, i) => +(v - chiBudget[i]).toFixed(1));
+
+    charts.barMonthlyChi = echarts.init(document.getElementById('barMonthlyChi'));
+    charts.barMonthlyChi.setOption({
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'cross' },
+            formatter: params => {
+                let html = `<strong>${params[0].axisValue}</strong><br/>`;
+                params.forEach(p => {
+                    // For Chi, negative diff (under budget) is good
+                    const color = p.seriesName === 'Chênh lệch' ? (p.value <= 0 ? '#16A34A' : '#DC2626') : p.color;
+                    html += `<span style="color:${color}">●</span> ${p.seriesName}: <strong>${p.value} tỷ</strong><br/>`;
+                });
+                return html;
+            }
+        },
+        legend: { data: ['Thực chi', 'Ngân sách', 'Chênh lệch'], textStyle: { color: '#64748B', fontSize: 10 }, top: 0 },
+        grid: { left: '3%', right: '4%', bottom: '10%', containLabel: true },
+        xAxis: { type: 'category', data: months, axisLabel: { color: '#64748B' } },
+        yAxis: [{
+            type: 'value',
+            name: 'Giá trị (tỷ)',
+            axisLabel: { color: '#64748B', formatter: v => v + ' tỷ' },
+            splitLine: { lineStyle: { color: '#E2E8F0' } }
+        }],
+        series: [
             {
-                name: 'Thu KH lũy kế',
+                name: 'Chênh lệch',
+                type: 'bar',
+                data: chiDiff.map(v => ({
+                    value: v,
+                    // For Chi, under budget (negative) is good = green, over budget (positive) is bad = red
+                    itemStyle: { color: v <= 0 ? 'rgba(22,163,74,0.6)' : 'rgba(220,38,38,0.6)' }
+                })),
+                barWidth: '40%',
+                label: {
+                    show: true,
+                    position: 'top',
+                    formatter: params => params.value !== 0 ? params.value : '',
+                    fontSize: 9,
+                    color: '#64748B'
+                }
+            },
+            {
+                name: 'Thực chi',
                 type: 'line',
                 smooth: true,
-                data: cumThuKH,
-                lineStyle: { color: '#4ADE80', width: 2, type: 'dashed' },
-                itemStyle: { color: '#4ADE80' },
+                data: chiActual,
+                lineStyle: { color: '#DC2626', width: 3 },
+                itemStyle: { color: '#DC2626' },
+                symbol: 'circle',
+                symbolSize: 6
+            },
+            {
+                name: 'Ngân sách',
+                type: 'line',
+                smooth: true,
+                data: chiBudget,
+                lineStyle: { color: '#3B82F6', width: 2, type: 'dashed' },
+                itemStyle: { color: '#3B82F6' },
                 symbol: 'diamond',
-                symbolSize: 5,
-                z: 4
+                symbolSize: 6
             }
         ]
     });
 }
 
-// Bảng chi tiết Thu - Chi - Sản lượng theo tháng
-function renderCashflowTable() {
-    const months = cashflowData.months;
-    const d = cashflowData;
+function renderStructureBars() {
+    const thuCats = demoData.thuItems.map(i => i.shortName);
+    const chiCats = demoData.chiItems.slice(0, 6).map(i => i.shortName);
 
-    let html = '<table class="data-table" style="font-size:12px;">';
-    // Header
-    html += '<thead><tr>';
-    html += '<th style="min-width:60px;text-align:center;position:sticky;left:0;background:#FEE2E2;z-index:3;">Tháng</th>';
-    html += '<th style="min-width:90px;text-align:right;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);">KH Sản lượng</th>';
-    html += '<th style="min-width:90px;text-align:right;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);">TT Sản lượng</th>';
-    html += '<th style="min-width:80px;text-align:right;background:linear-gradient(135deg,#FEF2F2,#FEE2E2);">KH Chi</th>';
-    html += '<th style="min-width:80px;text-align:right;background:linear-gradient(135deg,#FEF2F2,#FEE2E2);">TT Chi</th>';
-    html += '<th style="min-width:80px;text-align:right;background:linear-gradient(135deg,#F0FDF4,#DCFCE7);">KH Thu</th>';
-    html += '<th style="min-width:80px;text-align:right;background:linear-gradient(135deg,#F0FDF4,#DCFCE7);">TT Thu</th>';
-    html += '<th style="min-width:100px;text-align:right;background:linear-gradient(135deg,#FFFBEB,#FEF3C7);">Dòng tiền ròng</th>';
-    html += '</tr></thead><tbody>';
+    // Data for THU
+    const thuActual = [38.5, 18.2, 11.7, 8.4];
+    const thuBudget = [45.2, 25.0, 15.0, 9];
 
-    let totalSLKH = 0, totalSLTT = 0, totalChiKH = 0, totalChiTT = 0, totalThuKH = 0, totalThuTT = 0, totalNet = 0;
-
-    months.forEach((m, i) => {
-        const slKH = d.slKH[i];
-        const slTT = d.slTT[i];
-        const chiKH = d.chiKH[i];
-        const chiTT = d.chiTT[i];
-        const thuKH = d.thuKH[i];
-        const thuTT = d.thuTT[i];
-        const net = +(thuTT - chiTT).toFixed(1);
-
-        totalSLKH += slKH; totalSLTT += slTT;
-        totalChiKH += chiKH; totalChiTT += chiTT;
-        totalThuKH += thuKH; totalThuTT += thuTT;
-        totalNet += net;
-
-        const netColor = net >= 0 ? '#16A34A' : '#DC2626';
-        const netIcon = net >= 0 ? '▲' : '▼';
-        const isNoData = slTT === 0 && chiTT === 0 && thuTT === 0;
-        const rowStyle = isNoData ? 'opacity:0.4;' : '';
-        const bgRow = i % 2 === 1 ? 'background:#FBFCFE;' : '';
-
-        html += `<tr style="${rowStyle}${bgRow}">`;
-        html += `<td style="text-align:center;font-weight:700;color:var(--primary);background:#FFF5F5;position:sticky;left:0;z-index:1;">${m}</td>`;
-        html += `<td style="text-align:right;color:#2563EB;">${slKH.toFixed(1)}</td>`;
-        html += `<td style="text-align:right;color:#2563EB;font-weight:600;">${isNoData ? '—' : slTT.toFixed(1)}</td>`;
-        html += `<td style="text-align:right;color:#DC2626;">${chiKH.toFixed(1)}</td>`;
-        html += `<td style="text-align:right;color:#DC2626;font-weight:600;">${isNoData ? '—' : chiTT.toFixed(1)}</td>`;
-        html += `<td style="text-align:right;color:#16A34A;">${thuKH.toFixed(1)}</td>`;
-        html += `<td style="text-align:right;color:#16A34A;font-weight:600;">${isNoData ? '—' : thuTT.toFixed(1)}</td>`;
-        html += `<td style="text-align:right;color:${netColor};font-weight:700;">${isNoData ? '—' : netIcon + ' ' + Math.abs(net).toFixed(1)}</td>`;
-        html += '</tr>';
-    });
-
-    // Total row
-    const totalNetVal = +totalNet.toFixed(1);
-    const totalNetColor = totalNetVal >= 0 ? '#16A34A' : '#DC2626';
-    const totalNetIcon = totalNetVal >= 0 ? '▲' : '▼';
-    html += `<tr style="background:linear-gradient(135deg,#F1F5F9,#E2E8F0);font-weight:700;">`;
-    html += `<td style="text-align:center;font-weight:700;color:var(--primary);background:#FEE2E2;position:sticky;left:0;z-index:1;">TỔNG</td>`;
-    html += `<td style="text-align:right;color:#2563EB;">${totalSLKH.toFixed(1)}</td>`;
-    html += `<td style="text-align:right;color:#2563EB;">${totalSLTT.toFixed(1)}</td>`;
-    html += `<td style="text-align:right;color:#DC2626;">${totalChiKH.toFixed(1)}</td>`;
-    html += `<td style="text-align:right;color:#DC2626;">${totalChiTT.toFixed(1)}</td>`;
-    html += `<td style="text-align:right;color:#16A34A;">${totalThuKH.toFixed(1)}</td>`;
-    html += `<td style="text-align:right;color:#16A34A;">${totalThuTT.toFixed(1)}</td>`;
-    html += `<td style="text-align:right;color:${totalNetColor};">${totalNetIcon} ${Math.abs(totalNetVal).toFixed(1)}</td>`;
-    html += '</tr>';
-
-    html += '</tbody></table>';
-    document.getElementById('cashflowTable').innerHTML = html;
-}
-
-function renderNetCashflowBar() {
-    const d = cashflowData;
-    const months = d.months;
-
-    // Net = Thu TT - Chi TT (chỉ tính tháng có dữ liệu)
-    const nets = months.map((_, i) => +(d.thuTT[i] - d.chiTT[i]).toFixed(1));
-    const hasData = months.map((_, i) => d.thuTT[i] > 0 || d.chiTT[i] > 0);
-
-    // Running cumulative net
-    let cum = 0;
-    const cumNets = nets.map((v, i) => hasData[i] ? +(cum += v).toFixed(1) : null);
-
-    const barColors = nets.map((v, i) => {
-        if (!hasData[i]) return 'rgba(203,213,225,0.3)';
-        return v >= 0
-            ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: 'rgba(22,163,74,0.9)' },
-                { offset: 1, color: 'rgba(22,163,74,0.35)' }
-              ])
-            : new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: 'rgba(220,38,38,0.9)' },
-                { offset: 1, color: 'rgba(220,38,38,0.35)' }
-              ]);
-    });
-
-    if (!charts.barNetCashflow) {
-        charts.barNetCashflow = echarts.init(document.getElementById('barNetCashflow'));
-    }
-    charts.barNetCashflow.setOption({
+    charts.barStructureThu = echarts.init(document.getElementById('barStructureThu'));
+    charts.barStructureThu.setOption({
         tooltip: {
             trigger: 'axis',
-            axisPointer: { type: 'shadow' },
             formatter: params => {
-                const m = params[0].axisValue;
-                let html = `<strong>${m}</strong><br/>`;
-                params.forEach(p => {
-                    if (p.value === null || p.value === undefined) return;
-                    const unit = p.seriesName === 'Lũy kế ròng' ? ' tỷ (tích lũy)' : ' tỷ';
-                    const sign = p.value > 0 ? '+' : '';
-                    html += `<span style="color:${p.color}">●</span> ${p.seriesName}: <strong>${sign}${p.value}${unit}</strong><br/>`;
-                });
-                return html;
+                const actual = params.find(p => p.seriesName === 'Thực thu');
+                if (!actual) return '';
+                const budget = thuBudget[actual.dataIndex];
+                const pct = ((actual.value / budget) * 100).toFixed(0);
+                return `<strong>${actual.name}</strong><br/>Thực thu: <strong>${actual.value} tỷ</strong><br/>Ngân sách: ${budget} tỷ<br/>Đạt: ${pct}%`;
             }
         },
-        legend: {
-            data: ['Dòng tiền ròng', 'Lũy kế ròng'],
-            textStyle: { color: '#64748B', fontSize: 10 },
-            top: 0
-        },
-        grid: { left: '3%', right: '8%', bottom: '8%', top: '14%', containLabel: true },
-        xAxis: {
-            type: 'category',
-            data: months,
-            axisLabel: { color: '#64748B', fontSize: 11, fontWeight: 600 },
-            axisTick: { show: false },
-            axisLine: { lineStyle: { color: '#E2E8F0' } }
-        },
-        yAxis: [
-            {
-                type: 'value',
-                name: 'Tỷ đồng',
-                nameTextStyle: { color: '#64748B', fontSize: 10 },
-                axisLabel: { color: '#64748B', fontSize: 10, formatter: v => v + ' tỷ' },
-                splitLine: { lineStyle: { color: '#E2E8F0', type: 'dashed' } }
-            },
-            {
-                type: 'value',
-                name: 'Lũy kế',
-                nameTextStyle: { color: '#64748B', fontSize: 10 },
-                axisLabel: { color: '#64748B', fontSize: 10, formatter: v => v + ' tỷ' },
-                splitLine: { show: false }
-            }
-        ],
-        markLine: {
-            silent: true,
-            lineStyle: { color: '#CBD5E1', type: 'dashed' },
-            data: [{ yAxis: 0 }]
-        },
+        grid: { left: '3%', right: '22%', bottom: '3%', top: '3%', containLabel: true },
+        yAxis: { type: 'category', data: thuCats, axisLabel: { color: '#64748B' } },
+        xAxis: { type: 'value', axisLabel: { color: '#64748B', formatter: v => v + ' tỷ' } },
         series: [
             {
-                name: 'Dòng tiền ròng',
+                name: 'Thực thu',
                 type: 'bar',
-                yAxisIndex: 0,
-                data: nets.map((v, i) => ({
-                    value: hasData[i] ? v : null,
-                    itemStyle: { color: barColors[i], borderRadius: v >= 0 ? [4, 4, 0, 0] : [0, 0, 4, 4] }
-                })),
-                barWidth: '42%',
-                label: {
-                    show: true,
-                    position: 'top',
-                    formatter: p => p.value !== null ? (p.value > 0 ? '+' : '') + p.value : '',
-                    fontSize: 9,
-                    fontWeight: 700,
-                    color: '#374151'
-                }
+                data: thuActual,
+                itemStyle: { color: '#16A34A' },
+                barWidth: '50%',
+                z: 1
             },
             {
-                name: 'Lũy kế ròng',
-                type: 'line',
-                yAxisIndex: 1,
-                data: cumNets,
-                smooth: true,
-                connectNulls: false,
-                lineStyle: { color: '#6366F1', width: 2.5, type: 'solid' },
-                itemStyle: { color: '#6366F1', borderWidth: 2, borderColor: '#fff' },
-                symbol: 'circle',
-                symbolSize: 7
+                name: 'Ngân sách',
+                type: 'scatter',
+                symbol: 'rect',
+                symbolSize: [3, 24],
+                data: thuBudget.map((budget, idx) => {
+                    const val = thuActual[idx];
+                    const pct = ((val / budget) * 100 - 100).toFixed(0);
+                    const pctStr = pct >= 0 ? `+${pct}%` : `${pct}%`;
+                    return {
+                        value: [budget, idx],
+                        label: {
+                            show: true,
+                            position: 'right',
+                            formatter: `${val} tỷ | ${pctStr}`,
+                            fontSize: 10,
+                            color: '#333',
+                            distance: 8
+                        }
+                    };
+                }),
+                itemStyle: { color: '#1E293B' },
+                z: 10
+            }
+        ]
+    });
+
+    // Data for CHI
+    const chiActual = [1.5, 14, 9.8, 7.2, 11.5, 26];
+    const chiBudget = [1.6, 15.2, 10.8, 8.2, 12.5, 29];
+
+    charts.barStructureChi = echarts.init(document.getElementById('barStructureChi'));
+    charts.barStructureChi.setOption({
+        tooltip: {
+            trigger: 'axis',
+            formatter: params => {
+                const actual = params.find(p => p.seriesName === 'Thực chi');
+                if (!actual) return '';
+                const budget = chiBudget[actual.dataIndex];
+                const pct = ((actual.value / budget) * 100).toFixed(0);
+                return `<strong>${actual.name}</strong><br/>Thực chi: <strong>${actual.value} tỷ</strong><br/>Ngân sách: ${budget} tỷ<br/>Sử dụng: ${pct}%`;
+            }
+        },
+        grid: { left: '3%', right: '22%', bottom: '3%', top: '3%', containLabel: true },
+        yAxis: { type: 'category', data: chiCats, axisLabel: { color: '#64748B' } },
+        xAxis: { type: 'value', axisLabel: { color: '#64748B', formatter: v => v + ' tỷ' } },
+        series: [
+            {
+                name: 'Thực chi',
+                type: 'bar',
+                data: chiActual,
+                itemStyle: { color: '#DC2626' },
+                barWidth: '50%',
+                z: 1
+            },
+            {
+                name: 'Ngân sách',
+                type: 'scatter',
+                symbol: 'rect',
+                symbolSize: [3, 24],
+                data: chiBudget.map((budget, idx) => {
+                    const val = chiActual[idx];
+                    const pct = ((val / budget) * 100 - 100).toFixed(0);
+                    const pctStr = pct >= 0 ? `+${pct}%` : `${pct}%`;
+                    const isOver = val > budget;
+                    return {
+                        value: [budget, idx],
+                        label: {
+                            show: true,
+                            position: 'right',
+                            formatter: `${val} tỷ | ${pctStr}`,
+                            fontSize: 10,
+                            padding: [3, 6],
+                            borderRadius: 3,
+                            backgroundColor: isOver ? '#DC2626' : '#16A34A',
+                            color: '#fff',
+                            distance: 8
+                        }
+                    };
+                }),
+                itemStyle: { color: '#1E293B' },
+                z: 10
             }
         ]
     });
 }
 
 function updatePage2() {
-    renderCashflowGauges();
-    renderComboCashflow();
-    renderNetCashflowBar();
-    renderCashflowTable();
+    renderGaugesPage1();
+    renderFHIChart();
+    renderMonthlyComboCharts();
+    renderStructureBars();
 }
 
 // Page 3
@@ -968,27 +734,19 @@ function initPage3() {
 }
 
 function renderComparisonTable(selectedCategories = null) {
-    // Dữ liệu mẫu với đầy đủ các cột mới
-    // kh = Kế hoạch duyệt, lkKH = Lũy kế KH, yc = Yêu cầu lần này, lkDuyet = Lũy kế đã duyệt trước
+    // Tất cả items có thể
     const allItems = [
-        { name: 'CHI.01 - Pháp lý dự án',     code: 'CHI.01',       level: 1, kh: 2.0,  lkKH: 2.0,  yc: 1.55, lkDuyet: 1.40 },
-        { name: 'CHI.01.10 - Hồ sơ pháp lý',  code: 'CHI.01.10',    level: 2, kh: 1.0,  lkKH: 1.0,  yc: 0.90, lkDuyet: 0.80 },
-        { name: 'CHI.01.20 - Phí giấy phép',    code: 'CHI.01.20',    level: 2, kh: 1.0,  lkKH: 1.0,  yc: 0.65, lkDuyet: 0.60 },
-        { name: 'CHI.02 - Kiến thiết cơ bản',  code: 'CHI.02',       level: 1, kh: 16.0, lkKH: 16.0, yc: 15.0, lkDuyet: 14.2 },
-        { name: 'CHI.02.10 - Khảo sát địa hình', code: 'CHI.02.10',   level: 2, kh: 4.0,  lkKH: 4.0,  yc: 3.5,  lkDuyet: 3.2  },
-        { name: 'CHI.02.20 - Thiết kế cơ sở',  code: 'CHI.02.20',    level: 2, kh: 6.0,  lkKH: 5.5,  yc: 5.8,  lkDuyet: 5.2  },
-        { name: 'CHI.03 - Bán hàng',             code: 'CHI.03',       level: 1, kh: 5.0,  lkKH: 4.5,  yc: 4.2,  lkDuyet: 3.8  },
-        { name: 'CHI.04 - Chuẩn bị dự án',      code: 'CHI.04',       level: 1, kh: 3.0,  lkKH: 2.8,  yc: 2.5,  lkDuyet: 2.2  },
-        { name: 'CHI.05 - Thiết bị',             code: 'CHI.05',       level: 1, kh: 8.0,  lkKH: 7.0,  yc: 7.2,  lkDuyet: 6.5  },
-        { name: 'CHI.06 - Nhân công & Thầu phụ', code: 'CHI.06',       level: 1, kh: 30.0, lkKH: 27.0, yc: 28.1, lkDuyet: 26.5 },
-        { name: 'CHI.06.30 - Gói thầu kết cấu',  code: 'CHI.06.30',    level: 2, kh: 12.0, lkKH: 10.5, yc: 9.6,  lkDuyet: 8.2  },
-        { name: 'CHI.06.30.31 - KC A',           code: 'CHI.06.30.31', level: 3, kh: 4.0,  lkKH: 0.0,  yc: 2.4,  lkDuyet: 0.0  },
-        { name: 'CHI.06.30.32 - KC B',           code: 'CHI.06.30.32', level: 3, kh: 4.0,  lkKH: 0.0,  yc: 2.1,  lkDuyet: 0.0  },
-        { name: 'CHI.06.40.06 - Gói A',          code: 'CHI.06.40.06', level: 3, kh: 3.0,  lkKH: 0.0,  yc: 2.4,  lkDuyet: 0.0  },
-        { name: 'CHI.07 - Vật tư & NCC',         code: 'CHI.07',       level: 1, kh: 12.0, lkKH: 10.0, yc: 9.8,  lkDuyet: 8.5  },
-        { name: 'CHI.08 - Hoạt động trực tiếp', code: 'CHI.08',       level: 1, kh: 6.0,  lkKH: 5.0,  yc: 4.8,  lkDuyet: 4.2  },
+        { name: 'CHI.01 - Pháp lý', code: 'CHI.01', before: 1.4, after: 1.55 },
+        { name: 'CHI.02 - Kiến thiết', code: 'CHI.02', before: 14.2, after: 15.0 },
+        { name: 'CHI.01.10 - Hồ sơ pháp lý', code: 'CHI.01.10', before: 0.8, after: 0.9 },
+        { name: 'CHI.01.20 - Phí giấy phép', code: 'CHI.01.20', before: 0.6, after: 0.65 },
+        { name: 'CHI.06 - Nhân công', code: 'CHI.06', before: 26.5, after: 28.1 },
+        { name: 'CHI.06.30 - Gói thầu KC', code: 'CHI.06.30', before: 8.2, after: 9.6 },
+        { name: 'CHI.06.30.31 - Gói thầu KC A', code: 'CHI.06.30.31', before: null, after: 2.4 },
+        { name: 'CHI.06.40.06 - Gói thầu A', code: 'CHI.06.40.06', before: null, after: 2.4 }
     ];
 
+    // Filter theo selected categories
     const items = selectedCategories && selectedCategories.length > 0
         ? allItems.filter(item => selectedCategories.some(cat => item.code.startsWith(cat)))
         : allItems;
@@ -998,76 +756,13 @@ function renderComparisonTable(selectedCategories = null) {
         return;
     }
 
-    // Header
-    let html = `<table class="data-table" style="font-size:12px;min-width:900px;">
-    <thead>
-        <tr>
-            <th rowspan="2" style="min-width:200px;position:sticky;left:0;background:#F1F5F9;z-index:3;">Hạng Mục</th>
-            <th colspan="2" style="text-align:center;background:#EFF6FF;color:#2563EB;">Kế Hoạch</th>
-            <th colspan="2" style="text-align:center;background:#F0FDF4;color:#16A34A;">Thực Hiện</th>
-            <th colspan="2" style="text-align:center;background:#FFFBEB;color:#D97706;">Chênh Lệch</th>
-        </tr>
-        <tr>
-            <th style="text-align:right;background:#EFF6FF;color:#2563EB;">KH Duyệt</th>
-            <th style="text-align:right;background:#EFF6FF;color:#2563EB;">Lũy kế KH</th>
-            <th style="text-align:right;background:#F0FDF4;color:#16A34A;">Yêu cầu duyệt</th>
-            <th style="text-align:right;background:#F0FDF4;color:#16A34A;">Lũy kế đã duyệt</th>
-            <th style="text-align:right;background:#FFFBEB;color:#D97706;">YC vs KH</th>
-            <th style="text-align:right;background:#FFFBEB;color:#D97706;">LK duyệt vs LK KH</th>
-        </tr>
-    </thead>
-    <tbody>`;
-
-    let totKH = 0, totLKKH = 0, totYC = 0, totLKD = 0;
-
-    items.forEach((item, idx) => {
-        const indent = (item.level - 1) * 14;
-        const isBold = item.level === 1;
-        const bg = idx % 2 === 0 ? '' : 'background:#FBFCFE;';
-        const boldStyle = isBold ? 'font-weight:700;' : 'font-weight:400;';
-
-        // Chênh lệch YC so KH (âm = tiết kiệm, dương = vượt)
-        const diffYCKH = +(item.yc - item.kh).toFixed(2);
-        const diffLKKH = item.lkKH > 0 ? +(item.lkDuyet - item.lkKH).toFixed(2) : null;
-
-        const fmtDiff = (v) => {
-            if (v === null) return '<span style="color:#94A3B8;">—</span>';
-            const color = v > 0.05 ? '#DC2626' : v < -0.05 ? '#16A34A' : '#64748B';
-            const sign = v > 0 ? '+' : '';
-            return `<span style="color:${color};font-weight:600;">${sign}${v.toFixed(1)} tỷ</span>`;
-        };
-
-        if (item.level === 1) { totKH += item.kh; totLKKH += item.lkKH; totYC += item.yc; totLKD += item.lkDuyet; }
-
-        html += `<tr style="${bg}">
-            <td style="padding-left:${8 + indent}px;${boldStyle}${bg}position:sticky;left:0;">${item.name}</td>
-            <td style="text-align:right;color:#2563EB;">${item.kh.toFixed(1)} tỷ</td>
-            <td style="text-align:right;color:#2563EB;">${item.lkKH > 0 ? item.lkKH.toFixed(1) + ' tỷ' : '<span style="color:#CBD5E1">—</span>'}</td>
-            <td style="text-align:right;color:#16A34A;font-weight:600;">${item.yc.toFixed(1)} tỷ</td>
-            <td style="text-align:right;color:#16A34A;">${item.lkDuyet > 0 ? item.lkDuyet.toFixed(1) + ' tỷ' : '<span style="color:#CBD5E1">—</span>'}</td>
-            <td style="text-align:right;">${fmtDiff(diffYCKH)}</td>
-            <td style="text-align:right;">${fmtDiff(diffLKKH)}</td>
-        </tr>`;
+    let html = '<table class="data-table"><thead><tr><th>Hạng mục</th><th>Trước duyệt</th><th>Sau duyệt</th><th>Chênh lệch</th></tr></thead><tbody>';
+    items.forEach(i => {
+        const diff = i.before ? i.after - i.before : i.after;
+        const diffColor = i.before ? (diff > 0 ? '#F59E0B' : '#16A34A') : '#16A34A';
+        const beforeText = i.before ? i.before.toFixed(1) + ' tỷ' : '<span style="color:#888">- (Mới)</span>';
+        html += `<tr><td>${i.name}</td><td>${beforeText}</td><td>${i.after.toFixed(1)} tỷ</td><td style="color:${diffColor}">+${diff.toFixed(1)} tỷ</td></tr>`;
     });
-
-    // Tổng
-    const totDiff1 = +(totYC - totKH).toFixed(2);
-    const totDiff2 = totLKKH > 0 ? +(totLKD - totLKKH).toFixed(2) : null;
-    const fmtTot = (v) => {
-        if (v === null) return '<span style="color:#94A3B8;">—</span>';
-        const color = v > 0 ? '#DC2626' : '#16A34A';
-        return `<span style="color:${color};">${v > 0 ? '+' : ''}${v.toFixed(1)} tỷ</span>`;
-    };
-    html += `<tr style="background:linear-gradient(135deg,#F1F5F9,#E2E8F0);font-weight:700;">
-        <td style="position:sticky;left:0;background:#E2E8F0;font-weight:700;">TỔNG</td>
-        <td style="text-align:right;color:#2563EB;">${totKH.toFixed(1)} tỷ</td>
-        <td style="text-align:right;color:#2563EB;">${totLKKH.toFixed(1)} tỷ</td>
-        <td style="text-align:right;color:#16A34A;">${totYC.toFixed(1)} tỷ</td>
-        <td style="text-align:right;color:#16A34A;">${totLKD.toFixed(1)} tỷ</td>
-        <td style="text-align:right;">${fmtTot(totDiff1)}</td>
-        <td style="text-align:right;">${fmtTot(totDiff2)}</td>
-    </tr>`;
-
     document.getElementById('comparisonTable').innerHTML = html + '</tbody></table>';
 }
 
@@ -1173,7 +868,7 @@ function renderPaymentMatrix(selectedCategories = null) {
         'overdue': '<span style="color:#DC2626;font-weight:600;">⚠ Quá hạn</span>'
     };
 
-    let html = '<table class="data-table"><thead><tr><th>Hạng mục</th><th>Thời hạn TT</th><th>Trạng thái</th><th style="text-align:right;">Giá trị cần duyệt</th></tr></thead><tbody>';
+    let html = '<table class="data-table"><thead><tr><th>Hạng mục</th><th>Thời hạn TT</th><th>Trạng thái</th><th>Giá trị</th></tr></thead><tbody>';
     items.forEach(i => {
         const indent = (i.level - 1) * 12;
         const nameStyle = i.level === 1 ? 'font-weight:600;' : '';
@@ -1322,44 +1017,33 @@ function renderPage3DetailGauges(proj) {
     const thuPct = Math.round(proj.actualThu / proj.budgetThuTotal * 100);
     const chiPct = Math.round(proj.actualChi / proj.budgetChiTotal * 100);
 
-    const makeGaugeOpt = (pct, colorStops) => ({
+    charts.gaugeThuDetail = echarts.init(document.getElementById('gaugeThuDetail'));
+    charts.gaugeThuDetail.setOption({
         series: [{
-            type: 'gauge',
-            startAngle: 210, endAngle: -30,
-            min: 0, max: 100,
-            radius: '92%',
-            center: ['50%', '60%'],
-            pointer: {
-                show: true, length: '65%', width: 5,
-                itemStyle: { color: 'auto' }
-            },
-            axisLine: {
-                lineStyle: { width: 16, color: colorStops }
-            },
-            axisTick: { show: false },
-            splitLine: { show: false },
+            type: 'gauge', startAngle: 180, endAngle: 0, min: 0, max: 100,
+            radius: '95%', center: ['50%', '75%'],
+            pointer: { show: true, length: '55%', width: 3 },
+            axisLine: { lineStyle: { width: 14, color: [[0.6, '#DC2626'], [0.8, '#F59E0B'], [1, '#16A34A']] } },
+            axisTick: { show: false }, splitLine: { show: false },
             axisLabel: { show: false },
-            detail: {
-                formatter: '{value}%',
-                fontSize: 22,
-                fontWeight: 700,
-                color: '#0F172A',
-                offsetCenter: [0, '30%']
-            },
-            title: { show: false },
-            data: [{ value: pct }]
+            detail: { formatter: '{value}%', fontSize: 16, color: '#0F172A', offsetCenter: [0, '40%'] },
+            data: [{ value: thuPct }]
         }]
     });
 
-    charts.gaugeThuDetail = echarts.init(document.getElementById('gaugeThuDetail'));
-    charts.gaugeThuDetail.setOption(makeGaugeOpt(thuPct,
-        [[0.6, '#FCA5A5'], [0.8, '#FCD34D'], [1, '#4ADE80']]
-    ));
-
     charts.gaugeChiDetail = echarts.init(document.getElementById('gaugeChiDetail'));
-    charts.gaugeChiDetail.setOption(makeGaugeOpt(chiPct,
-        [[0.6, '#4ADE80'], [0.8, '#FCD34D'], [1, '#F87171']]
-    ));
+    charts.gaugeChiDetail.setOption({
+        series: [{
+            type: 'gauge', startAngle: 180, endAngle: 0, min: 0, max: 100,
+            radius: '95%', center: ['50%', '75%'],
+            pointer: { show: true, length: '55%', width: 3 },
+            axisLine: { lineStyle: { width: 14, color: [[0.6, '#16A34A'], [0.8, '#F59E0B'], [1, '#DC2626']] } },
+            axisTick: { show: false }, splitLine: { show: false },
+            axisLabel: { show: false },
+            detail: { formatter: '{value}%', fontSize: 16, color: '#0F172A', offsetCenter: [0, '40%'] },
+            data: [{ value: chiPct }]
+        }]
+    });
 }
 
 function renderFHITrendChart(proj) {
@@ -1615,10 +1299,10 @@ function updatePage3Detail() {
 }
 
 // Init - Updated for 4 pages
-// Mapping: page1=Quản lý dòng tiền, page2=Duyệt Chi, page3=Chi tiết DA, page4=Quản lý Ngân sách
+// Mapping: page1=Hiệu quả Thu-Chi, page2=Duyệt Chi, page3=Chi tiết DA, page4=Ngân sách
 document.addEventListener('DOMContentLoaded', () => {
-    initPage2();       // page1 = Quản Lý Dòng Tiền
-    initPage3();       // page2 = Duyệt Chi
-    initPage3Detail(); // page3 = Chi tiết Thu-Chi DA
-    initPage1();       // page4 = Quản Lý Ngân Sách
+    initPage2();       // page1 mới = Hiệu quả Thu-Chi (hàm initPage2 cũ)
+    initPage3();       // page2 mới = Duyệt Chi (hàm initPage3 cũ)
+    initPage3Detail(); // page3 mới = Chi tiết Thu-Chi DA (hàm mới)
+    initPage1();       // page4 mới = Ngân sách (hàm initPage1 cũ)
 });
